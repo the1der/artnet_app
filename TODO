@@ -1,0 +1,19 @@
+Base organization:
+    ☐ theme color
+    text:
+        ☐ font
+        ☐ style
+    
+UI:
+    home:
+        ☐ background
+        ☐ node widget
+    node settings screen:
+        
+
+Artnet: 
+    ☐ base
+    ☐ scan
+    ☐ ipProg
+    ☐ artAddress
+    ☐ OpOutput
