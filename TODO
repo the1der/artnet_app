@@ -1,18 +1,20 @@
 Base organization:
-    ☐ theme color
+    ✔ theme color @done(23-07-06 14:15)
     text:
-        ☐ font
-        ☐ style
+        ✔ font @done(23-07-06 14:15)
+        ✔ style @done(23-07-06 14:15)
     
 UI:
     home:
-        ☐ background
-        ☐ node widget
+        ✔ background @done(23-07-06 14:14)
+        ✔ node widget @done(23-07-06 14:14)
+        ☐ scan butt
+        ☐ top bar
     node settings screen:
         
 
 Artnet: 
-    ☐ base
+    ✔ node model @done(23-07-06 14:15)
     ☐ scan
     ☐ ipProg
     ☐ artAddress
