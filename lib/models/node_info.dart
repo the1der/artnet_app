@@ -1,12 +1,12 @@
 import 'dart:io';
 
-class Node {
+class ArtNetNode {
   InternetAddress nodeIp;
   InternetAddress? netMask;
   String longName, shortName, macAddress;
   bool dhcpEnabled, dhcpCapable;
 
-  Node({
+  ArtNetNode({
     required this.nodeIp,
     required this.longName,
     required this.shortName,

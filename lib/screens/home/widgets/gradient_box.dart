@@ -8,22 +8,9 @@ class GradientBox extends StatelessWidget {
   Widget child;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       width: double.infinity,
-      // decoration: BoxDecoration(
-      //   gradient: RadialGradient(
-      //     // center: Alignment.bottomLeft,
-      //     radius: 0.6,
-      //     // stops: const [0.1, 1],
-      //     focalRadius: 1,
-      //     focal: Alignment.bottomRight,
-      //     colors: [
-      //       Theme.of(context).colorScheme.primary.withOpacity(0.2),
-      //       const Color(0x00FFFFFF),
-      //     ],
-      //   ),
-      // ),
       child: Container(
         height: double.infinity,
         width: double.infinity,

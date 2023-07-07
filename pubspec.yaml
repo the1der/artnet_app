@@ -39,6 +39,8 @@ dependencies:
   flutter_bloc: ^8.0.1
   equatable: ^2.0.5
   lottie: ^1.4.3
+  gradient_borders: ^1.0.0
+  simple_gradient_text: ^1.2.4
   
 dev_dependencies:
   flutter_test:
