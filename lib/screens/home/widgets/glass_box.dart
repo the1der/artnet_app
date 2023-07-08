@@ -91,14 +91,14 @@ class GlassBoxTwo extends StatelessWidget {
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
-                    Color(0xFF9EC474),
+                    const Color(0xFF9EC474),
                   ],
                 ),
               ),
               gradient: LinearGradient(
                 colors: [
                   boxColor?.withOpacity(0.1) ?? Colors.white.withOpacity(0.15),
-                  Colors.black.withOpacity(0.05),
+                  const Color(0xFF9EC474).withOpacity(0.05),
                 ],
               ),
             ),

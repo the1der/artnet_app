@@ -1,6 +1,7 @@
 import 'package:artnet_app/models/app_theme.dart';
 import 'package:artnet_app/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,20 +28,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // primaryColor: const MaterialColor(primaryColorValue, colorSwatch),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF00deeb),
-          brightness: Brightness.dark,
-        ),
-        fontFamily: "Poppins",
-        scaffoldBackgroundColor: const Color(0xFF151515),
-        brightness: Brightness.dark,
-      ),
-      home: HomeScreen(),
+    return ScreenUtilInit(
+      designSize: const Size(1080, 2160),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            // primaryColor: const MaterialColor(primaryColorValue, colorSwatch),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xFF00deeb),
+              brightness: Brightness.dark,
+            ),
+            fontFamily: "Poppins",
+            scaffoldBackgroundColor: const Color(0xFF151515),
+            brightness: Brightness.dark,
+          ),
+          home: HomeScreen(),
+        );
+      },
     );
   }
 }

@@ -6,7 +6,7 @@ import 'package:artnet_app/screens/home/widgets/gradient_box.dart';
 import 'package:artnet_app/screens/home/widgets/netmask_separator.dart';
 import 'package:artnet_app/screens/home/widgets/node_box.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -44,14 +44,14 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.10,
+              height: 0.10.sh,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ShaderMask(
                     child: Icon(
                       Icons.token_outlined,
-                      size: 45,
+                      size: 0.1.sw,
                       color: Colors.white,
                     ),
                     shaderCallback: (Rect bounds) {
@@ -60,19 +60,19 @@ class HomeScreen extends StatelessWidget {
                         end: Alignment.centerRight,
                         colors: <Color>[
                           Theme.of(context).colorScheme.primary,
-                          Color(0xFF9EC474),
+                          const Color(0xFF9EC474),
                         ],
                       ).createShader(bounds);
                     },
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 0.025.sw,
                   ),
                 ],
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: 0.7.sh,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -97,25 +97,25 @@ class HomeScreen extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.center,
-              height: MediaQuery.of(context).size.height * 0.15,
+              height: 0.15.sh,
               child: GlassBoxTwo(
-                boxWidth: MediaQuery.of(context).size.width * 0.4,
-                boxHeight: MediaQuery.of(context).size.height * 0.07,
+                boxWidth: 0.4.sw,
+                boxHeight: 0.07.sh,
                 boxColor: Theme.of(context).colorScheme.primary,
                 child: ShaderMask(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       Text(
-                        "Scan",
+                        "SCAN",
                         style: TextStyle(
                           // color: Theme.of(context).colorScheme.primary,
-                          fontSize: 30,
+                          fontSize: 70.sp,
                         ),
                       ),
                       Icon(
                         Icons.wifi_find,
-                        size: 30,
+                        size: 0.065.sw,
                         // color: Theme.of(context).colorScheme.primary,
                       )
                     ],
@@ -126,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                       end: Alignment.centerRight,
                       colors: <Color>[
                         Theme.of(context).colorScheme.primary,
-                        Color(0xFF9EC474),
+                        const Color(0xFF9EC474),
                       ],
                     ).createShader(bounds);
                   },
