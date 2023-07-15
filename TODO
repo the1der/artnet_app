@@ -8,14 +8,18 @@ UI:
     home:
         ✔ background @done(23-07-06 14:14)
         ✔ node widget @done(23-07-06 14:14)
-        ☐ scan butt
+        ✔ scan butt @done(23-07-12 18:33)
         ☐ top bar
     node settings screen:
         
 
 Artnet: 
+    ✔ bind to 6454 @done(23-07-12 18:34)
     ✔ node model @done(23-07-06 14:15)
-    ☐ scan
-    ☐ ipProg
+    ✔ scan @done(23-07-12 18:34)
+    ☐ dhcp
+    ipProg:
+        ✔ equiry @done(23-07-12 18:34)
+        ☐ program
     ☐ artAddress
     ☐ OpOutput

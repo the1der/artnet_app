@@ -1,5 +1,5 @@
-import 'package:artnet_app/models/app_theme.dart';
 import 'package:artnet_app/screens/home/home_screen.dart';
+import 'package:artnet_app/services/artnet_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

@@ -2,7 +2,7 @@ import 'dart:io';
 
 class ArtNetNode {
   InternetAddress nodeIp;
-  InternetAddress? netMask;
+  InternetAddress? netMask, gateWay;
   String longName, shortName, macAddress;
   bool dhcpEnabled, dhcpCapable;
 
@@ -13,5 +13,7 @@ class ArtNetNode {
     required this.macAddress,
     required this.dhcpCapable,
     required this.dhcpEnabled,
+    this.netMask,
+    this.gateWay,
   });
 }

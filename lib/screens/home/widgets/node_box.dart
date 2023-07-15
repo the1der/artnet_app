@@ -28,7 +28,7 @@ class NodeBox extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  artNetNode.macAddress,
+                  artNetNode.macAddress.toUpperCase(),
                   style: TextStyle(
                     fontWeight: FontWeight.w100,
                     fontSize: 40.sp,
@@ -41,7 +41,7 @@ class NodeBox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  artNetNode.nodeIp.address,
+                  artNetNode.netMask?.address ?? "XX.XX.XX.XX",
                   style: TextStyle(
                     fontWeight: FontWeight.w100,
                     fontSize: 40.sp,
