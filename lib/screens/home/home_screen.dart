@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
     nodeIp: InternetAddress("192.168.1.2"),
     longName: "Node longName",
     netMask: InternetAddress("255.255.255.0"),
-    shortName: "Node shortName",
+    shortName: "Node short Name",
     macAddress: "9F:1A:3D:AB:C4:22",
     dhcpCapable: false,
     dhcpEnabled: true,
@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
       nodeIp: InternetAddress("192.168.1.10"),
       longName: "Node longName",
       netMask: InternetAddress("255.255.255.0"),
-      shortName: "Node shortName",
+      shortName: "ESP32 Node two",
       macAddress: "9F:4A:3C:AF:C4:75",
       dhcpCapable: false,
       dhcpEnabled: true);
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
   ArtNetNode artNetNode2 = ArtNetNode(
       nodeIp: InternetAddress("192.168.1.21"),
       longName: "Node longName",
-      shortName: "Node shortName",
+      shortName: "Hello Node one one",
       macAddress: "9A:1C:3A:CB:DF:12",
       netMask: InternetAddress("255.255.255.0"),
       dhcpCapable: false,
