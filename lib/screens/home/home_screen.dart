@@ -15,7 +15,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
+  ArtNetNode artNetNode = ArtNetNode(
+    nodeIp: InternetAddress("192.168.1.2"),
+    longName: "Node longName",
+    shortName: "Node shortName",
+    macAddress: "9F:1A:3D:AB:C4:22",
+    dhcpCapable: false,
+    dhcpEnabled: true,
+  );
+  ArtNetNode artNetNode1 = ArtNetNode(
+      nodeIp: InternetAddress("192.168.1.10"),
+      longName: "Node longName",
+      shortName: "Node shortName",
+      macAddress: "9F:4A:3C:AF:C4:75",
+      dhcpCapable: false,
+      dhcpEnabled: true);
 
+  ArtNetNode artNetNode2 = ArtNetNode(
+      nodeIp: InternetAddress("192.168.1.21"),
+      longName: "Node longName",
+      shortName: "Node shortName",
+      macAddress: "9A:1C:3A:CB:DF:12",
+      dhcpCapable: false,
+      dhcpEnabled: false);
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -58,21 +80,14 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: state is HomeInitial ? 0.1 : 0.7.sh,
+                    height: 0.7.sh,
+                    // height: state is HomeInitial ? 0.1 : 0.7.sh,
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          state is ArtNetNoFoundNodes
-                              ? Container(
-                                  height: 0.40.sw,
-                                  width: 0.40.sw,
-                                  color: Colors.white,
-                                  child: Text("No Nodes"),
-                                )
-                              : state is ArtNetFoundNodes
-                                  ? NodeBox(
-                                      artNetNode: ArtNetModule.scanResults[0])
-                                  : Container()
+                          NodeBox(artNetNode: artNetNode),
+                          NodeBox(artNetNode: artNetNode1),
+                          NodeBox(artNetNode: artNetNode2),
                         ],
                       ),
                     ),
