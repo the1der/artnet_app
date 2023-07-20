@@ -1,7 +1,7 @@
 # ArtNet Nodes Management App
 
 ## Introduction
-Welcome to the ArtNet Nodes Management App repository! This Flutter mobile application is designed for managing ArtNet nodes, configuring their network settings, and controlling DMX data transmission. The primary goal of this project is to facilitate personal development and experimentation, and it's intended for fun and educational purposes. Please note that the app is still a work in progress and may not be fully functional yet.
+Welcome to the ArtNet Nodes Management App repository! This Flutter mobile application is designed for managing ArtNet nodes, configuring their network settings, and controlling DMX data transmission. The primary goal of this project is to facilitate personal development and experimentation, and it's intended for fun and educational purposes. **Please note that the app is still a work in progress and may not be fully functional yet**.
 
 ## Features
 - **Discover ArtNet Nodes:**: Scan the local network to discover available ArtNet nodes and display them in a list.
