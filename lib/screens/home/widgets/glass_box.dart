@@ -16,9 +16,13 @@ class GlassBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.antiAlias,
       width: boxWidth,
       height: boxHeight,
-      color: Colors.transparent,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.transparent,
+      ),
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -29,6 +33,7 @@ class GlassBox extends StatelessWidget {
             ),
           ),
           Container(
+            clipBehavior: Clip.antiAlias,
             width: boxWidth,
             height: boxHeight,
             decoration: BoxDecoration(
@@ -45,9 +50,12 @@ class GlassBox extends StatelessWidget {
             ),
           ),
           Container(
+            clipBehavior: Clip.antiAlias,
             width: boxWidth,
             height: boxHeight,
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
             child: child,
           )
         ],

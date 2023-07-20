@@ -159,7 +159,7 @@ class ArtNetModule {
       longName: String.fromCharCodes(recvBuffer.sublist(44, 108)),
       shortName: String.fromCharCodes(recvBuffer.sublist(26, 44)),
       macAddress: recvBuffer
-          .sublist(201, 206)
+          .sublist(201, 207)
           .map((byte) => byte.toRadixString(16).padLeft(2, '0'))
           .join(':'),
       dhcpCapable: ((recvBuffer[212] & 0x04) >> 2 == 1),

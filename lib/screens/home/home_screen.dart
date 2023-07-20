@@ -15,6 +15,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
+  List<Widget> createNodeList(List<ArtNetNode> nodeList) {
+    List<NodeBox> nodeBoxList = [];
+    for (int i = 0; i < nodeList.length; i++) {
+      nodeBoxList.add(NodeBox(artNetNode: nodeList[i]));
+    }
+    return nodeBoxList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,21 +67,19 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: state is HomeInitial ? 0.1 : 0.7.sh,
                     child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          state is ArtNetNoFoundNodes
-                              ? Container(
-                                  height: 0.40.sw,
-                                  width: 0.40.sw,
-                                  color: Colors.white,
-                                  child: Text("No Nodes"),
+                      child: state is ArtNetNoFoundNodes
+                          ? Container(
+                              height: 0.40.sw,
+                              width: 0.40.sw,
+                              color: Colors.white,
+                              child: const Text("No Nodes"),
+                            )
+                          : state is ArtNetFoundNodes
+                              ? Column(
+                                  children:
+                                      createNodeList(ArtNetModule.scanResults),
                                 )
-                              : state is ArtNetFoundNodes
-                                  ? NodeBox(
-                                      artNetNode: ArtNetModule.scanResults[0])
-                                  : Container()
-                        ],
-                      ),
+                              : Container(),
                     ),
                   ),
                   Container(
