@@ -19,7 +19,7 @@ class NodeSettings extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 0.05.sh,
+              height: 0.025.sh,
             ),
             Text(
               artNetNode.shortName,
