@@ -3,7 +3,7 @@
 ## Introduction
 Welcome to the ArtNet Nodes Management App repository! This Flutter mobile application is designed for managing ArtNet nodes, configuring their network settings, and controlling DMX data transmission. The primary goal of this project is to facilitate personal development and experimentation, and it's intended for fun and educational purposes. **Please note that the app is still a work in progress and may not be fully functional yet**.
 
-## What is Artnet
+### What is Artnet
 ArtNet is a protocol used in the entertainment and lighting industries to control and communicate with intelligent lighting fixtures, such as DMX-controlled stage lights. It allows for the transmission of lighting data, such as color, intensity, and position, over an Ethernet network. ArtNet enables lighting designers and technicians to remotely control and synchronize multiple lighting devices, making it a popular choice for creating dynamic and visually appealing lighting displays in concerts, theaters, events, and architectural installations.
 
 ## Features
