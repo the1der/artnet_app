@@ -39,60 +39,66 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: 0.10.sh,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ShaderMask(
-                          child: Icon(
-                            Icons.token_outlined,
-                            size: 0.1.sw,
-                            color: Colors.white,
-                          ),
-                          shaderCallback: (Rect bounds) {
-                            return LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: <Color>[
-                                Theme.of(context).colorScheme.primary,
-                                const Color(0xFF9EC474),
-                              ],
-                            ).createShader(bounds);
-                          },
+                    child: ShaderMask(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 0.01.sw),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.sort,
+                              size: 0.07.sw,
+                            ),
+                            SizedBox(
+                              width: 0.03.sw,
+                            ),
+                            Icon(
+                              Icons.token_outlined,
+                              size: 0.07.sw,
+                            )
+                          ],
                         ),
-                        SizedBox(
-                          width: 0.025.sw,
-                        ),
-                      ],
+                      ),
+                      shaderCallback: (Rect bounds) {
+                        return LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: <Color>[
+                            Theme.of(context).colorScheme.primary,
+                            const Color(0xFF9EC474),
+                          ],
+                        ).createShader(bounds);
+                      },
                     ),
                   ),
                   SizedBox(
                     height: state is HomeInitial ? 0 : 0.7.sh,
-                    child: state is ArtNetNoFoundNodes
+                    child: state is ArtNetScanning
                         ? Center(
                             child: GlassBoxTwo(
-                              gradient: const [
-                                Color.fromARGB(255, 255, 203, 32),
-                                Color.fromARGB(255, 227, 128, 31),
-                              ],
-                              boxColor: const Color.fromARGB(225, 255, 203, 32),
+                              boxColor: Theme.of(context).colorScheme.primary,
                               boxHeight: 0.18.sh,
                               boxWidth: 0.6.sw,
                               child: ShaderMask(
                                 child: Padding(
-                                  padding: EdgeInsets.all(0.03.sh),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 0.02.sh,
+                                    horizontal: 0.02.sw,
+                                  ),
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      Icon(
-                                        Icons.wifi_tethering_error,
-                                        size: 0.07.sh,
+                                      Lottie.asset(
+                                        'assets/lottie/search_radar.json',
+                                        height: 0.1.sh,
+                                        frameRate: FrameRate(120),
                                       ),
                                       Text(
-                                        "No nodes found".toUpperCase(),
+                                        "Scanning".toUpperCase(),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 50.sp,
+                                          fontSize: 47.sp,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
@@ -100,26 +106,72 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                 ),
                                 shaderCallback: (Rect bounds) {
-                                  return const LinearGradient(
+                                  return LinearGradient(
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
                                     colors: <Color>[
-                                      Color.fromARGB(255, 255, 203, 32),
-                                      Color.fromARGB(255, 227, 128, 31),
+                                      Theme.of(context).colorScheme.primary,
+                                      const Color(0xFF9EC474),
                                     ],
                                   ).createShader(bounds);
                                 },
                               ),
                             ),
                           )
-                        : SingleChildScrollView(
-                            child: state is ArtNetFoundNodes
-                                ? Column(
-                                    children: createNodeList(
-                                        ArtNetModule.scanResults),
-                                  )
-                                : Container(),
-                          ),
+                        : state is ArtNetNoFoundNodes
+                            ? Center(
+                                child: GlassBoxTwo(
+                                  gradient: const [
+                                    Color.fromARGB(255, 255, 203, 32),
+                                    Color.fromARGB(255, 227, 128, 31),
+                                  ],
+                                  boxColor:
+                                      const Color.fromARGB(225, 255, 203, 32),
+                                  boxHeight: 0.18.sh,
+                                  boxWidth: 0.6.sw,
+                                  child: ShaderMask(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(0.03.sh),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Icon(
+                                            Icons.wifi_tethering_error,
+                                            size: 0.07.sh,
+                                          ),
+                                          Text(
+                                            "No nodes found".toUpperCase(),
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 50.sp,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    shaderCallback: (Rect bounds) {
+                                      return const LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: <Color>[
+                                          Color.fromARGB(255, 255, 203, 32),
+                                          Color.fromARGB(255, 227, 128, 31),
+                                        ],
+                                      ).createShader(bounds);
+                                    },
+                                  ),
+                                ),
+                              )
+                            : SingleChildScrollView(
+                                child: state is ArtNetFoundNodes
+                                    ? Column(
+                                        children: createNodeList(
+                                            ArtNetModule.scanResults),
+                                      )
+                                    : Container(),
+                              ),
                   ),
                   Container(
                     alignment: Alignment.center,
@@ -140,16 +192,17 @@ class HomeScreen extends StatelessWidget {
                                   fontSize: 70.sp,
                                 ),
                               ),
-                              state is ArtNetScanning
-                                  ? Lottie.asset(
-                                      'assets/lottie/searching.json',
-                                      height: 0.04.sh,
-                                    )
-                                  : Icon(
-                                      Icons.wifi_find,
-                                      size: 0.065.sw,
-                                      // color: Theme.of(context).colorScheme.primary,
-                                    )
+                              // state is ArtNetScanning
+                              //     ? Lottie.asset(
+                              //         'assets/lottie/searching.json',
+                              //         height: 0.04.sh,
+                              //       )
+                              //     :
+                              Icon(
+                                Icons.wifi_find,
+                                size: 0.065.sw,
+                                // color: Theme.of(context).colorScheme.primary,
+                              )
                             ],
                           ),
                           shaderCallback: (Rect bounds) {
