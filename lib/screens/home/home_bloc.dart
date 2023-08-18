@@ -13,6 +13,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ArtNetStartScan>((event, emit) async {
       ArtNetModule.scanResults = [];
       DateTime killTime = DateTime.now().add(const Duration(seconds: 3));
+      emit(ArtNetScanning());
       await ArtNetModule.sendOpPollRequest();
       while (true) {
         await ArtNetModule.handleRecieve(killTime);

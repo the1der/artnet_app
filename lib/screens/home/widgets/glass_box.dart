@@ -71,10 +71,12 @@ class GlassBoxTwo extends StatelessWidget {
     required this.boxHeight,
     required this.boxWidth,
     this.boxColor,
+    this.gradient,
   });
   Color? boxColor;
   Widget child;
   double boxWidth, boxHeight;
+  List<Color>? gradient;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -97,10 +99,11 @@ class GlassBoxTwo extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               border: GradientBoxBorder(
                 gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary,
-                    const Color(0xFF9EC474),
-                  ],
+                  colors: gradient ??
+                      [
+                        Theme.of(context).colorScheme.primary,
+                        const Color(0xFF9EC474),
+                      ],
                 ),
               ),
               gradient: LinearGradient(

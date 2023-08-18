@@ -177,6 +177,7 @@ class ArtNetModule {
     if (pos != -1) {
       scanResults[pos].netMask = nodeNetMask;
       scanResults[pos].gateWay = nodeGateWay;
+      log(nodeGateWay.address.toString());
     }
   }
 
