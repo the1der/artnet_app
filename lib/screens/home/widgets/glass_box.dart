@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 
 class GlassBox extends StatelessWidget {
@@ -72,10 +73,12 @@ class GlassBoxTwo extends StatelessWidget {
     required this.boxWidth,
     this.boxColor,
     this.gradient,
+    this.boxBorder,
   });
   Color? boxColor;
   Widget child;
   double boxWidth, boxHeight;
+  double? boxBorder;
   List<Color>? gradient;
   @override
   Widget build(BuildContext context) {
@@ -96,7 +99,8 @@ class GlassBoxTwo extends StatelessWidget {
             width: boxWidth,
             height: boxHeight,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
+              // borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(boxBorder ?? 70.sp),
               border: GradientBoxBorder(
                 gradient: LinearGradient(
                   colors: gradient ??

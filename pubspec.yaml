@@ -42,6 +42,7 @@ dependencies:
   gradient_borders: ^1.0.0
   flutter_screenutil: ^5.7.0
   udp: ^5.0.3
+  tab_container: ^2.0.0
       
 dev_dependencies:
   flutter_test:
