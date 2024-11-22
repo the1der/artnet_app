@@ -16,6 +16,34 @@ import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
+  ArtNetNode artNetNode = ArtNetNode(
+    nodeIp: InternetAddress("192.168.1.2"),
+    longName: "Node longName",
+    netMask: InternetAddress("255.255.255.0"),
+    shortName: "Node short Name",
+    macAddress: "9F:1A:3D:AB:C4:22",
+    dhcpCapable: false,
+    dhcpEnabled: true,
+  );
+  ArtNetNode artNetNode1 = ArtNetNode(
+      nodeIp: InternetAddress("192.168.1.10"),
+      longName: "Node longName",
+      netMask: InternetAddress("255.255.255.0"),
+      shortName: "ESP32 Node two",
+      macAddress: "9F:4A:3C:AF:C4:75",
+      dhcpCapable: false,
+      dhcpEnabled: true);
+
+  ArtNetNode artNetNode2 = ArtNetNode(
+      nodeIp: InternetAddress("192.168.1.21"),
+      longName: "Node longName",
+      shortName: "Hello Node one one",
+      macAddress: "9A:1C:3A:CB:DF:12",
+      netMask: InternetAddress("255.255.255.0"),
+      dhcpCapable: false,
+      dhcpEnabled: false);
+  List<ArtNetNode> nodeList = [];
+
   List<Widget> createNodeList(List<ArtNetNode> nodeList) {
     List<NodeBox> nodeBoxList = [];
     for (int i = 0; i < nodeList.length; i++) {
@@ -26,6 +54,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    nodeList.add(artNetNode);
+    nodeList.add(artNetNode1);
+    nodeList.add(artNetNode2);
+
     return BlocProvider(
       create: (context) => HomeBloc(),
       child: BlocBuilder<HomeBloc, HomeState>(
@@ -92,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                                       Lottie.asset(
                                         'assets/lottie/search_radar.json',
                                         height: 0.1.sh,
-                                        frameRate: FrameRate(120),
+                                        frameRate: const FrameRate(120),
                                       ),
                                       Text(
                                         "Scanning".toUpperCase(),
@@ -119,50 +151,58 @@ class HomeScreen extends StatelessWidget {
                             ),
                           )
                         : state is ArtNetNoFoundNodes
-                            ? Center(
-                                child: GlassBoxTwo(
-                                  gradient: const [
-                                    Color.fromARGB(255, 255, 203, 32),
-                                    Color.fromARGB(255, 227, 128, 31),
-                                  ],
-                                  boxColor:
-                                      const Color.fromARGB(225, 255, 203, 32),
-                                  boxHeight: 0.18.sh,
-                                  boxWidth: 0.6.sw,
-                                  child: ShaderMask(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(0.03.sh),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Icon(
-                                            Icons.wifi_tethering_error,
-                                            size: 0.07.sh,
-                                          ),
-                                          Text(
-                                            "No nodes found".toUpperCase(),
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 50.sp,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    shaderCallback: (Rect bounds) {
-                                      return const LinearGradient(
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                        colors: <Color>[
-                                          Color.fromARGB(255, 255, 203, 32),
-                                          Color.fromARGB(255, 227, 128, 31),
-                                        ],
-                                      ).createShader(bounds);
-                                    },
-                                  ),
-                                ),
+                            ?
+                            // ? Center(
+                            //     child: GlassBoxTwo(
+                            //       gradient: const [
+                            //         Color.fromARGB(255, 255, 203, 32),
+                            //         Color.fromARGB(255, 227, 128, 31),
+                            //       ],
+                            //       boxColor:
+                            //           const Color.fromARGB(225, 255, 203, 32),
+                            //       boxHeight: 0.18.sh,
+                            //       boxWidth: 0.6.sw,
+                            //       child: ShaderMask(
+                            //         child: Padding(
+                            //           padding: EdgeInsets.all(0.03.sh),
+                            //           child: Column(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.spaceAround,
+                            //             children: [
+                            //               Icon(
+                            //                 Icons.wifi_tethering_error,
+                            //                 size: 0.07.sh,
+                            //               ),
+                            //               FittedBox(
+                            //                 child: Text(
+                            //                   "No nodes found".toUpperCase(),
+                            //                   textAlign: TextAlign.center,
+                            //                   style: TextStyle(
+                            //                     fontSize: 50.sp,
+                            //                     fontWeight: FontWeight.w700,
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //         shaderCallback: (Rect bounds) {
+                            //           return const LinearGradient(
+                            //             begin: Alignment.centerLeft,
+                            //             end: Alignment.centerRight,
+                            //             colors: <Color>[
+                            //               Color.fromARGB(255, 255, 203, 32),
+                            //               Color.fromARGB(255, 227, 128, 31),
+                            //             ],
+                            //           ).createShader(bounds);
+                            //         },
+                            //       ),
+                            //     ),
+                            //   )
+                            Column(
+                                children: createNodeList(
+                                    // ArtNetModule.scanResults),
+                                    nodeList),
                               )
                             : SingleChildScrollView(
                                 child: state is ArtNetFoundNodes

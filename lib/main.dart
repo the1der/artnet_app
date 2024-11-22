@@ -2,6 +2,7 @@ import 'package:artnet_app/screens/home/home_screen.dart';
 import 'package:artnet_app/services/artnet_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +30,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(1080, 2160),
+      designSize: Size(
+        MediaQuery.of(context).size.width,
+        MediaQuery.of(context).size.height,
+      ),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {

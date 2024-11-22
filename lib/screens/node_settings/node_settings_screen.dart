@@ -9,7 +9,7 @@ import 'package:artnet_app/screens/node_settings/widgets/glass_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tab_container/tab_container.dart';
+// import 'package:tab_container/tab_container.dart';
 
 class NodeSettings extends StatefulWidget {
   NodeSettings({
@@ -44,199 +44,179 @@ class _NodeSettingsState extends State<NodeSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GradientBox(
-        child: SafeArea(
-          child: Column(
-            children: [
-              // SizedBox(
-              //   height: scrollPosition < 60
-              //       ? (0.02 - (0.02 / 60) * scrollPosition).sh
-              //       : 0.sh,
-              // ),
-              //  scrollPosition < 60
-              //       ? (0.02 - (0.02 / 60) * scrollPosition).sh
-              //       : 0.sh,
-              Container(
-                height: scrollPosition < 60
-                    ? (0.15 - (0.08 / 60) * scrollPosition).sh
-                    : 0.07.sh,
-                width: 1.sw,
-                decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                    width: 0.002.sh,
-                    color: Theme.of(context).colorScheme.secondary.withOpacity(
-                          scrollPosition < 60
-                              ? ((0.3 / 60) * scrollPosition)
-                              : 0.3,
-                        ),
-                    // color: Colors.white.withOpacity(0.2),
-                  )),
-                  gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.secondary.withOpacity(
-                            scrollPosition < 60
-                                ? ((0.32 / 60) * scrollPosition)
-                                : 0.32,
-                          ),
-                      Theme.of(context).colorScheme.secondary.withOpacity(
-                            scrollPosition < 60
-                                ? ((0.12 / 60) * scrollPosition)
-                                : 0.12,
-                          ),
-                    ],
-                  ),
-                ),
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            "Node details",
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // SizedBox(
+            //   height: scrollPosition < 60
+            //       ? (0.02 - (0.02 / 60) * scrollPosition).sh
+            //       : 0.sh,
+            // ),
+            //  scrollPosition < 60
+            //       ? (0.02 - (0.02 / 60) * scrollPosition).sh
+            //       : 0.sh,
+            // Container(
+            //   height: scrollPosition < 60
+            //       ? (0.15 - (0.08 / 60) * scrollPosition).sh
+            //       : 0.07.sh,
+            //   width: 1.sw,
+            //   decoration: BoxDecoration(
+            //     border: Border(
+            //         bottom: BorderSide(
+            //       width: 0.002.sh,
+            //       color: Theme.of(context).colorScheme.secondary.withOpacity(
+            //             scrollPosition < 60
+            //                 ? ((0.3 / 60) * scrollPosition)
+            //                 : 0.3,
+            //           ),
+            //       // color: Colors.white.withOpacity(0.2),
+            //     )),
+            //     gradient: LinearGradient(
+            //       colors: [
+            //         Theme.of(context).colorScheme.secondary.withOpacity(
+            //               scrollPosition < 60
+            //                   ? ((0.32 / 60) * scrollPosition)
+            //                   : 0.32,
+            //             ),
+            //         Theme.of(context).colorScheme.secondary.withOpacity(
+            //               scrollPosition < 60
+            //                   ? ((0.12 / 60) * scrollPosition)
+            //                   : 0.12,
+            //             ),
+            //       ],
+            //     ),
+            //   ),
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Padding(
+            //         padding: EdgeInsets.only(left: 0.1.sw),
+            //         child: Text(
+            //           "Node details",
+            //           style: TextStyle(
+            //             // fontWeight: FontWeight.w00,
+            //             fontSize: scrollPosition < 60
+            //                 ? (75 - (15 / 60) * scrollPosition).sp
+            //                 : 60.sp,
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            Expanded(
+              // height: 0.89.sh,
+              child: SingleChildScrollView(
+                controller: scrollController,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 0.1.sw),
-                      child: Text(
-                        "Node details",
-                        style: TextStyle(
-                          // fontWeight: FontWeight.w00,
-                          fontSize: scrollPosition < 60
-                              ? (75 - (15 / 60) * scrollPosition).sp
-                              : 60.sp,
-                        ),
+                      padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DetailsSeparator(title: "Art-Net configuration"),
+                          NodeInfoBox(
+                            title: "Short name",
+                            info: widget.artNetNode.shortName,
+                          ),
+                          NodeInfoBox(
+                            title: "Long name",
+                            info: widget.artNetNode.longName,
+                          ),
+                          DetailsSeparator(title: "IP configuration"),
+                          NodeInfoBox(
+                            title: "Mac address",
+                            info: widget.artNetNode.macAddress.toUpperCase(),
+                          ),
+                          NodeInfoBox(
+                            title: "IP address",
+                            info: widget.artNetNode.nodeIp.address,
+                          ),
+                          NodeInfoBox(
+                            title: "Netmask",
+                            info: widget.artNetNode.netMask?.address ??
+                                "XXX.XXX.XXX.XXX",
+                          ),
+                          NodeInfoBox(
+                            title: "Gateway",
+                            info: widget.artNetNode.gateWay?.address ??
+                                "XXX.XXX.XXX.XXX",
+                          ),
+                          Text(
+                            "DHCP enabled: ",
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.7),
+                              fontWeight: FontWeight.w100,
+                              fontSize: 40.sp,
+                            ),
+                          ),
+                          Text(
+                            widget.artNetNode.dhcpCapable ? "ON" : "OFF",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 50.sp,
+                              color: widget.artNetNode.dhcpCapable
+                                  ? Colors.green
+                                  : Colors.red[700],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0.025.sh,
+                          ),
+                          Text(
+                            "DHCP enable: ",
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.7),
+                              fontWeight: FontWeight.w100,
+                              fontSize: 40.sp,
+                            ),
+                          ),
+                          Text(
+                            widget.artNetNode.dhcpEnabled ? "ON" : "OFF",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 50.sp,
+                              color: widget.artNetNode.dhcpEnabled
+                                  ? Colors.green
+                                  : Colors.red[700],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0.02.sh,
+                          ),
+                          DetailsSeparator(title: "Addtional configuration"),
+                          NodeInfoBox(
+                            title: "Number of LEDs",
+                            info: 129.toString(),
+                          ),
+                          NodeInfoBox(
+                            title: "Colors",
+                            info: "RGBW",
+                          ),
+                          NodeInfoBox(
+                            title: "Controller",
+                            info: "RGBW",
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-              Expanded(
-                // height: 0.89.sh,
-                child: NotificationListener(
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              DetailsSeparator(title: "Art-Net configuration"),
-                              NodeInfoBox(
-                                title: "Short name",
-                                info: widget.artNetNode.shortName,
-                              ),
-                              NodeInfoBox(
-                                title: "Long name",
-                                info: widget.artNetNode.longName,
-                              ),
-                              DetailsSeparator(title: "IP configuration"),
-                              NodeInfoBox(
-                                title: "Mac address",
-                                info:
-                                    widget.artNetNode.macAddress.toUpperCase(),
-                              ),
-                              NodeInfoBox(
-                                title: "IP address",
-                                info: widget.artNetNode.nodeIp.address,
-                              ),
-                              NodeInfoBox(
-                                title: "Netmask",
-                                info: widget.artNetNode.netMask?.address ??
-                                    "XXX.XXX.XXX.XXX",
-                              ),
-                              NodeInfoBox(
-                                title: "Gateway",
-                                info: widget.artNetNode.gateWay?.address ??
-                                    "XXX.XXX.XXX.XXX",
-                              ),
-                              Text(
-                                "DHCP enabled: ",
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.7),
-                                  fontWeight: FontWeight.w100,
-                                  fontSize: 40.sp,
-                                ),
-                              ),
-                              Text(
-                                widget.artNetNode.dhcpCapable ? "ON" : "OFF",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 50.sp,
-                                  color: widget.artNetNode.dhcpCapable
-                                      ? Colors.green
-                                      : Colors.red[700],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 0.025.sh,
-                              ),
-                              Text(
-                                "DHCP enable: ",
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.7),
-                                  fontWeight: FontWeight.w100,
-                                  fontSize: 40.sp,
-                                ),
-                              ),
-                              Text(
-                                widget.artNetNode.dhcpEnabled ? "ON" : "OFF",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 50.sp,
-                                  color: widget.artNetNode.dhcpEnabled
-                                      ? Colors.green
-                                      : Colors.red[700],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 0.02.sh,
-                              ),
-                              DetailsSeparator(
-                                  title: "Addtional configuration"),
-                              NodeInfoBox(
-                                title: "Number of LEDs",
-                                info: 129.toString(),
-                              ),
-                              NodeInfoBox(
-                                title: "Colors",
-                                info: "RGBW",
-                              ),
-                              NodeInfoBox(
-                                title: "Controller",
-                                info: "RGBW",
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  onNotification: (notification) {
-                    if (notification is ScrollNotification) {
-                      scrollPosition = notification.metrics.pixels;
-                      // log(notification.metrics.pixels.toString());
-                      // log("value " + 0.02.sh.toString());
-                      // log((0.02 - (0.02 / 60) * scrollPosition).sh.toString());
-                      // double smth = scrollPosition < 60
-                      //     ? ((0.15 / 60) * scrollPosition)
-                      //     : 0.15;
-                      // log(smth.toString());
-                      // double height = scrollPosition < 60
-                      //     ? (0.09 - (0.02 / 60) * scrollPosition)
-                      //     : 0.07;
-                      // log(height.toString());
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        setState(() {});
-                      });
-                    }
-
-                    return true;
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
