@@ -7,21 +7,21 @@ class GlassBox extends StatelessWidget {
   GlassBox({
     super.key,
     required this.child,
-    required this.boxHeight,
-    required this.boxWidth,
+    required this.height,
+    required this.width,
     this.boxColor,
   });
   Color? boxColor;
   Widget child;
-  double boxWidth, boxHeight;
+  double width, height;
   @override
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.antiAlias,
-      width: boxWidth,
-      height: boxHeight,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15.r),
         color: Colors.transparent,
       ),
       child: Stack(
@@ -35,10 +35,10 @@ class GlassBox extends StatelessWidget {
           ),
           Container(
             clipBehavior: Clip.antiAlias,
-            width: boxWidth,
-            height: boxHeight,
+            width: width,
+            height: height,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.r),
               border: Border.all(
                 color: Colors.white.withOpacity(0.13),
               ),
@@ -52,10 +52,10 @@ class GlassBox extends StatelessWidget {
           ),
           Container(
             clipBehavior: Clip.antiAlias,
-            width: boxWidth,
-            height: boxHeight,
+            width: width,
+            height: height,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.r),
             ),
             child: child,
           )
@@ -69,22 +69,27 @@ class GlassBoxTwo extends StatelessWidget {
   GlassBoxTwo({
     super.key,
     required this.child,
-    required this.boxHeight,
-    required this.boxWidth,
+    this.height,
+    this.width,
     this.boxColor,
-    this.gradient,
-    this.boxBorder,
+    this.borderGradient,
+    this.boxGradient,
+    this.borderRadius,
+    this.shape,
   });
   Color? boxColor;
   Widget child;
-  double boxWidth, boxHeight;
-  double? boxBorder;
-  List<Color>? gradient;
+  double? width;
+  double? height;
+  Gradient? boxGradient;
+  Gradient? borderGradient;
+  BorderRadiusGeometry? borderRadius;
+  BoxShape? shape;
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: boxWidth,
-      height: boxHeight,
+      width: width,
+      height: height,
       color: Colors.transparent,
       child: Stack(
         alignment: Alignment.topCenter,
@@ -96,31 +101,40 @@ class GlassBoxTwo extends StatelessWidget {
             ),
           ),
           Container(
-            width: boxWidth,
-            height: boxHeight,
+            width: width,
+            height: height,
             decoration: BoxDecoration(
               // borderRadius: BorderRadius.circular(30),
-              borderRadius: BorderRadius.circular(boxBorder ?? 70.sp),
+              shape: shape ?? BoxShape.rectangle,
+              borderRadius: shape == BoxShape.circle
+                  ? null
+                  : borderRadius ?? BorderRadius.circular(20.r),
               border: GradientBoxBorder(
-                gradient: LinearGradient(
-                  colors: gradient ??
-                      [
-                        Theme.of(context).colorScheme.primary,
-                        const Color(0xFF9EC474),
+                gradient: borderGradient ??
+                    const LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 197, 255, 255),
+                        Colors.cyan,
                       ],
-                ),
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomLeft,
+                    ),
               ),
-              gradient: LinearGradient(
-                colors: [
-                  boxColor?.withOpacity(0.1) ?? Colors.white.withOpacity(0.15),
-                  const Color(0xFF9EC474).withOpacity(0.05),
-                ],
-              ),
+              gradient: boxGradient ??
+                  LinearGradient(
+                    colors: [
+                      boxColor?.withOpacity(0.1) ??
+                          const Color.fromARGB(255, 197, 255, 255)
+                              .withOpacity(0.15),
+                      Colors.cyan.withOpacity(0.05),
+                    ],
+                  ),
             ),
           ),
           Container(
-            width: boxWidth,
-            height: boxHeight,
+            width: width,
+            height: height,
+            alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: child,
           )

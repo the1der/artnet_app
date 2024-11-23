@@ -79,19 +79,24 @@ class _GLassTextFieldState extends State<GLassTextField> {
             ),
           ),
           GlassBoxTwo(
-            boxHeight: 0.07.sh,
-            boxWidth: widget.width ?? 0.9.sw,
-            boxBorder: 50.sp,
+            height: 0.07.sh,
+            width: widget.width ?? 0.9.sw,
+            borderRadius: BorderRadius.circular(25.r),
             boxColor: focusNode.hasFocus
                 ? isCorrect
                     ? Theme.of(context).colorScheme.primary
                     : Colors.orange[900]
                 : null,
-            gradient: focusNode.hasFocus
-                ? isCorrect
-                    ? null
-                    : errorGradient
-                : disbaleGradient,
+            borderGradient: LinearGradient(
+              colors: focusNode.hasFocus
+                  ? isCorrect
+                      ? [
+                          Colors.red.withOpacity(0.5),
+                          Colors.white.withOpacity(0.1),
+                        ]
+                      : errorGradient
+                  : disbaleGradient,
+            ),
             child: Container(
               alignment: Alignment.center,
               child: TextField(

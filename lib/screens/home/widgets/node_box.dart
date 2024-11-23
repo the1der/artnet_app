@@ -13,8 +13,8 @@ class NodeBox extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: 0.01.sh),
       child: GlassBox(
-        boxWidth: 0.95.sw,
-        boxHeight: 0.08.sh,
+        width: 0.95.sw,
+        height: 0.08.sh,
         child: InkWell(
           onTap: () {
             Navigator.push(
@@ -42,14 +42,14 @@ class NodeBox extends StatelessWidget {
                       Text(
                         artNetNode.shortName,
                         style: TextStyle(
-                          fontSize: 45.sp,
+                          fontSize: 20.sp,
                         ),
                       ),
                       Text(
                         artNetNode.macAddress.toUpperCase(),
                         style: TextStyle(
                           fontWeight: FontWeight.w100,
-                          fontSize: 40.sp,
+                          fontSize: 18.sp,
                         ),
                       )
                     ],
@@ -62,7 +62,7 @@ class NodeBox extends StatelessWidget {
                         artNetNode.netMask?.address ?? "XX.XX.XX.XX",
                         style: TextStyle(
                           fontWeight: FontWeight.w100,
-                          fontSize: 40.sp,
+                          fontSize: 20.sp,
                         ),
                       ),
                       RichText(
@@ -70,26 +70,19 @@ class NodeBox extends StatelessWidget {
                           text: "DHCP: ",
                           style: TextStyle(
                             fontWeight: FontWeight.w100,
-                            fontSize: 40.sp,
+                            fontSize: 20.sp,
                           ),
                           children: [
-                            artNetNode.dhcpEnabled
-                                ? TextSpan(
-                                    text: "ON",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 40.sp,
-                                      color: Colors.green,
-                                    ),
-                                  )
-                                : TextSpan(
-                                    text: "OFF",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 40.sp,
-                                      color: Colors.red[700],
-                                    ),
-                                  ),
+                            TextSpan(
+                              text: artNetNode.dhcpEnabled ? "ON" : "OFF",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20.sp,
+                                color: artNetNode.dhcpEnabled
+                                    ? Colors.green
+                                    : Colors.red[700],
+                              ),
+                            )
                           ],
                         ),
                       )

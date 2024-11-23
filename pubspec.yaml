@@ -21,6 +21,7 @@ dependencies:
   gradient_borders: ^1.0.1
   flutter_screenutil: ^5.9.3
   udp: ^5.0.3
+  circular_countdown_timer: ^0.2.4
       
 dev_dependencies:
   flutter_test:
@@ -45,3 +46,34 @@ flutter:
           style: italic
         - asset: fonts/Poppins-Light.ttf
           weight: 100
+          
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Regular.ttf
+        - asset: fonts/Roboto-Bold.ttf
+          weight: 700
+        - asset: fonts/Roboto-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: fonts/Roboto-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: fonts/Roboto-Light.ttf
+          weight: 300
+        - asset: fonts/Roboto-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: fonts/Roboto-Thin.ttf
+          weight: 100
+        - asset: fonts/Roboto-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: fonts/Roboto-Black.ttf
+          weight: 900
+        - asset: fonts/Roboto-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: fonts/Roboto-Italic.ttf
+          style: italic

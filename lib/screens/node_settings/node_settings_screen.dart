@@ -240,7 +240,7 @@ class NodeInfoBox extends StatelessWidget {
           Text(
             '$title:',
             style: TextStyle(
-              fontSize: 40.sp,
+              fontSize: 20.sp,
               color: Theme.of(context).colorScheme.secondary,
               // color: Colors.white.withOpacity(0.7),
               fontWeight: FontWeight.w100,
@@ -249,7 +249,7 @@ class NodeInfoBox extends StatelessWidget {
           Text(
             info,
             style: TextStyle(
-              fontSize: 50.sp,
+              fontSize: 25.sp,
             ),
           ),
         ],
