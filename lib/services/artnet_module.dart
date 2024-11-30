@@ -16,7 +16,7 @@ class ArtNetModule {
   static const int ver = 63488;
   static Future<bool> sendOpPollRequest() async {
     await init();
-    log('Sending ArtPollRequest');
+    // log('Sending ArtPollRequest');
     // bool = false;
     Uint8List packet = Uint8List(16);
     bool waitingDone = false;
@@ -29,17 +29,17 @@ class ArtNetModule {
     try {
       await sender!.send(packet, Endpoint.broadcast(port: const Port(6454)));
     } catch (e) {
-      log("Sending failed");
+      // log("Sending failed");
       return false;
     }
-    log('Sent');
+    // log('Sent');
     return true;
   }
 
   static Future<bool> sendOpIpProg(
       {required OpIpProgPacket opIpProgPacket, ArtNetNode? artNetNode}) async {
     await init();
-    log('Sending OpIpProgPacket');
+    // log('Sending OpIpProgPacket');
     int commad = 0;
     Uint8List packet = Uint8List(30);
     packet.setAll(0, protcolID.codeUnits);
@@ -75,7 +75,7 @@ class ArtNetModule {
       commad = commad | 0x08;
       commad = commad | 0x80;
     }
-    log("commad : $commad");
+    // log("commad : $commad");
     packet.setAll(14, [commad & 0xFF]);
 
     try {
@@ -86,11 +86,11 @@ class ArtNetModule {
             Endpoint.unicast(artNetNode.nodeIp, port: const Port(6454)));
       }
     } catch (e) {
-      log("Sending failed");
+      // log("Sending failed");
       return false;
     }
-    log('Sent');
-    log(packet.toString());
+    // log('Sent');
+    // log(packet.toString());
     return true;
   }
 
@@ -105,10 +105,10 @@ class ArtNetModule {
     try {
       sender = await UDP.bind(Endpoint.any(port: const Port(6454)));
     } catch (e) {
-      log("Unable to bind to post 6454");
+      // log("Unable to bind to post 6454");
       sender = await UDP.bind(Endpoint.any(port: const Port(6454)));
     }
-    log('Socket bound to ${sender!.socket!.address.address}:${sender!.socket!.port}');
+    // log('Socket bound to ${sender!.socket!.address.address}:${sender!.socket!.port}');
   }
 
   static Future handleRecieve(DateTime killTime) async {
@@ -119,16 +119,16 @@ class ArtNetModule {
         if (opCode > 0) {
           switch (opCode) {
             case Opcode.opPollReply:
-              log("OpPollReply");
+              // log("OpPollReply");
               decOpPollReply(event.data);
               break;
 
             case Opcode.opIpProgReply:
-              log("OpIpProgReply");
+              // log("OpIpProgReply");
               decOpIpProgReply(event.data);
               break;
             default:
-              log("Unhandled opCode: $opCode");
+            // log("Unhandled opCode: $opCode");
           }
           doneListening = true;
         }
@@ -138,16 +138,16 @@ class ArtNetModule {
       await Future.delayed(const Duration(milliseconds: 100));
       if (DateTime.now().compareTo(killTime) >= 0) break;
     }
-    log('Done listeing');
+    // log('Done listeing');
   }
 
   static int checkOpcode(Uint8List recvBuffer) {
     if (String.fromCharCodes(recvBuffer.sublist(0, 7)) != "Art-Net") {
-      log('Not Art-Net packet: Wrong packet ID');
+      // log('Not Art-Net packet: Wrong packet ID');
       return -1;
     }
     if (recvBuffer.length < 11) {
-      log('Not Art-Net packet: Packet too short');
+      // log('Not Art-Net packet: Packet too short');
       return -1;
     }
     return ((recvBuffer[9] << 8) | recvBuffer[8]);
@@ -177,7 +177,7 @@ class ArtNetModule {
     if (pos != -1) {
       scanResults[pos].netMask = nodeNetMask;
       scanResults[pos].gateWay = nodeGateWay;
-      log(nodeGateWay.address.toString());
+      // log(nodeGateWay.address.toString());
     }
   }
 

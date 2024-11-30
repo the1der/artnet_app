@@ -18,6 +18,17 @@ class ArtNetNoFoundNodes extends HomeState {
 }
 
 class ArtNetScanning extends HomeState {
+  ScanState scanState;
+  int foundDevices;
+  ArtNetScanning({
+    required this.foundDevices,
+    required this.scanState,
+  });
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [foundDevices, scanState];
+}
+
+enum ScanState {
+  firstScan,
+  getIpInfo,
 }
