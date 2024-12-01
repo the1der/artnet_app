@@ -8,6 +8,7 @@ import 'package:artnet_app/screens/home/home_state.dart';
 import 'package:artnet_app/screens/home/widgets/glass_box.dart';
 import 'package:artnet_app/screens/home/widgets/node_box.dart';
 import 'package:artnet_app/screens/node_settings/node_settings_screen.dart';
+import 'package:artnet_app/services/artnet_module.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -249,6 +250,13 @@ class _HomeScreenState extends State<HomeScreen>
                                 alignment: Alignment.center,
                                 child: InkWell(
                                   customBorder: const CircleBorder(),
+                                  onTap: state is HomeInitial
+                                      ? () {
+                                          context
+                                              .read<HomeBloc>()
+                                              .add(ArtNetStartScan());
+                                        }
+                                      : null,
                                   child: GlassBoxTwo(
                                     height: size - 0.05.sw,
                                     width: size - 0.05.sw,
@@ -334,11 +342,25 @@ class _HomeScreenState extends State<HomeScreen>
                                           )
                                         : (state is ArtNetFoundNodes ||
                                                 state is ArtNetNoFoundNodes)
-                                            ? Text(
-                                                "Done".toUpperCase(),
-                                                style: TextStyle(
-                                                  fontSize: 45.sp,
-                                                  fontWeight: FontWeight.w200,
+                                            ? RichText(
+                                                textAlign: TextAlign.center,
+                                                text: TextSpan(
+                                                  text: "Done".toUpperCase(),
+                                                  style: TextStyle(
+                                                    fontSize: 45.sp,
+                                                    fontWeight: FontWeight.w100,
+                                                  ),
+                                                  children: [
+                                                    TextSpan(
+                                                      text:
+                                                          "\n${ArtNetModule.scanResults.length} device found",
+                                                      style: TextStyle(
+                                                        fontSize: 15.sp,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               )
                                             : Text(
@@ -349,13 +371,6 @@ class _HomeScreenState extends State<HomeScreen>
                                                 ),
                                               ),
                                   ),
-                                  onTap: () {
-                                    if (state is HomeInitial) {
-                                      context
-                                          .read<HomeBloc>()
-                                          .add(ArtNetStartScan());
-                                    }
-                                  },
                                 ),
                               ),
                             ],
@@ -369,9 +384,14 @@ class _HomeScreenState extends State<HomeScreen>
                           children: [
                             AnimatedPositioned(
                               duration: const Duration(milliseconds: 300),
-                              top: state is ArtNetScanning ? 0 : -0.3.sh,
-                              left: 0,
+                              // top: state is ArtNetScanning ? 0 : -0.3.sh,
+                              // left: 0,
                               right: 0,
+                              bottom: 0,
+                              left: (state is ArtNetFoundNodes ||
+                                      state is ArtNetNoFoundNodes)
+                                  ? 2.sw
+                                  : 0,
                               child: Center(
                                 child: RichText(
                                   text: TextSpan(
@@ -396,11 +416,16 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                             AnimatedPositioned(
                               duration: const Duration(milliseconds: 300),
-                              bottom: (state is ArtNetFoundNodes ||
+                              // bottom: (state is ArtNetFoundNodes ||
+                              //         state is ArtNetNoFoundNodes)
+                              //     ? 0
+                              //     : -0.3.sh,
+                              // left: 0,
+                              bottom: 0,
+                              left: (state is ArtNetFoundNodes ||
                                       state is ArtNetNoFoundNodes)
                                   ? 0
-                                  : -0.3.sh,
-                              left: 0,
+                                  : -2.sw,
                               right: 0,
                               child: Align(
                                 alignment: Alignment.bottomCenter,
@@ -467,6 +492,9 @@ class _HomeScreenState extends State<HomeScreen>
                                     ),
                                     InkWell(
                                       borderRadius: BorderRadius.circular(20.r),
+                                      onTap: state is ArtNetFoundNodes
+                                          ? () {}
+                                          : null,
                                       child: GlassBoxTwo(
                                         width: 0.3.sw,
                                         height: 0.06.sh,
@@ -475,8 +503,9 @@ class _HomeScreenState extends State<HomeScreen>
                                         borderGradient: LinearGradient(
                                           colors: state is ArtNetNoFoundNodes
                                               ? [
-                                                  Colors.red.withOpacity(0.75),
-                                                  Colors.red.withOpacity(0.2),
+                                                  Colors.white
+                                                      .withOpacity(0.75),
+                                                  Colors.white.withOpacity(0.2),
                                                 ]
                                               : [
                                                   const Color(0xFF69F0AE)
@@ -486,13 +515,19 @@ class _HomeScreenState extends State<HomeScreen>
                                                 ],
                                         ),
                                         boxGradient: RadialGradient(
-                                          colors: [
-                                            Colors.cyan.withOpacity(0.75),
-                                            Theme.of(context)
-                                                .colorScheme
-                                                .surface
-                                                .withOpacity(0.75)
-                                          ],
+                                          colors: state is ArtNetNoFoundNodes
+                                              ? [
+                                                  Colors.white.withOpacity(0.5),
+                                                  Colors.white
+                                                      .withOpacity(0.05),
+                                                ]
+                                              : [
+                                                  Colors.cyan.withOpacity(0.75),
+                                                  Theme.of(context)
+                                                      .colorScheme
+                                                      .surface
+                                                      .withOpacity(0.75)
+                                                ],
                                           center: Alignment.bottomLeft,
                                           radius: 1,
                                         ),
@@ -512,7 +547,6 @@ class _HomeScreenState extends State<HomeScreen>
                                           ],
                                         ),
                                       ),
-                                      onTap: () {},
                                     )
                                   ],
                                 ),

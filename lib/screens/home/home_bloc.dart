@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:artnet_app/models/op_ip_prog_packet.dart';
 import 'package:artnet_app/services/artnet_module.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
