@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -19,7 +18,6 @@ class ArtNetModule {
     // log('Sending ArtPollRequest');
     // bool = false;
     Uint8List packet = Uint8List(16);
-    bool waitingDone = false;
     packet.setAll(0, protcolID.codeUnits);
     packet.setAll(7, [0x00]);
     packet.setAll(8, opCodeToPacket(Opcode.opPoll));

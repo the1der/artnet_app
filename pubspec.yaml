@@ -22,7 +22,10 @@ dependencies:
   flutter_screenutil: ^5.9.3
   udp: ^5.0.3
   circular_countdown_timer: ^0.2.4
-      
+  wifi_info_flutter: ^2.0.2
+  connectivity_plus: ^6.1.0
+  wifi_ip_details: ^1.0.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -7,12 +7,12 @@ import 'package:artnet_app/screens/home/home_event.dart';
 import 'package:artnet_app/screens/home/home_state.dart';
 import 'package:artnet_app/screens/home/widgets/glass_box.dart';
 import 'package:artnet_app/screens/home/widgets/node_box.dart';
-import 'package:artnet_app/screens/node_settings/node_settings_screen.dart';
 import 'package:artnet_app/services/artnet_module.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wifi_info_flutter/wifi_info_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -52,9 +52,12 @@ class _HomeScreenState extends State<HomeScreen>
       dhcpEnabled: false);
 
   List<ArtNetNode> nodeList = [];
-
+  bool isWiFiConnected = false;
   late AnimationController _controller;
-
+  WifiInfo wifiInfo = WifiInfo();
+  String wifiSSID = "";
+  String wifiIP = "";
+  bool _isWifiConnected = false;
   List<Widget> createNodeList(List<ArtNetNode> nodeList) {
     List<NodeBox> nodeBoxList = [];
     for (int i = 0; i < nodeList.length; i++) {
@@ -65,12 +68,26 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 10),
     );
+
+    Connectivity()
+        .onConnectivityChanged
+        .listen((List<ConnectivityResult> result) async {
+      log(result.length.toString());
+      if (result.contains(ConnectivityResult.wifi)) {
+        log("here");
+        wifiIP = await wifiInfo.getWifiIP() ?? "";
+        wifiSSID = await wifiInfo.getWifiName() ?? "";
+        _isWifiConnected = true;
+      } else {
+        _isWifiConnected = false;
+      }
+      setState(() {});
+    });
   }
 
   @override
@@ -79,6 +96,9 @@ class _HomeScreenState extends State<HomeScreen>
     nodeList.add(artNetNode);
     nodeList.add(artNetNode1);
     nodeList.add(artNetNode2);
+
+    wifiInfo = WifiInfo();
+
     return BlocProvider(
       create: (context) => HomeBloc(),
       child: BlocBuilder<HomeBloc, HomeState>(
@@ -120,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: "DJAWEB_DB71B",
+                                    text: wifiSSID,
                                     style: TextStyle(
                                       fontSize: 20.sp,
                                       // color: Theme.of(context)
@@ -145,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: "192.186.133.56",
+                                    text: wifiIP,
                                     style: TextStyle(
                                       fontSize: 20.sp,
                                       // color: Theme.of(context)
@@ -158,56 +178,6 @@ class _HomeScreenState extends State<HomeScreen>
                                 ],
                               ),
                             ),
-                            RichText(
-                              text: TextSpan(
-                                text: "Gateway: ",
-                                style: TextStyle(
-                                  fontSize: 20.sp,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  // color: Colors.white.withOpacity(0.7),
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: "192.168.1.1",
-                                    style: TextStyle(
-                                      fontSize: 20.sp,
-                                      // color: Theme.of(context)
-                                      //     .colorScheme
-                                      //     .secondary,
-                                      color: Colors.white.withOpacity(0.7),
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                text: "Netmask: ",
-                                style: TextStyle(
-                                  fontSize: 20.sp,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  // color: Colors.white.withOpacity(0.7),
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: "255.255.255.0",
-                                    style: TextStyle(
-                                      fontSize: 20.sp,
-                                      // color: Theme.of(context)
-                                      //     .colorScheme
-                                      //     .secondary,
-                                      color: Colors.white.withOpacity(0.7),
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
                           ],
                         ),
                       ),
@@ -388,10 +358,7 @@ class _HomeScreenState extends State<HomeScreen>
                               // left: 0,
                               right: 0,
                               bottom: 0,
-                              left: (state is ArtNetFoundNodes ||
-                                      state is ArtNetNoFoundNodes)
-                                  ? 2.sw
-                                  : 0,
+                              left: state is ArtNetScanning ? 0 : 2.sw,
                               child: Center(
                                 child: RichText(
                                   text: TextSpan(
