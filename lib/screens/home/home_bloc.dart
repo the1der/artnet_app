@@ -39,7 +39,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (ArtNetModule.scanResults.isNotEmpty) {
         emit(ArtNetFoundNodes());
       } else {
-        emit(ArtNetNoFoundNodes());
+        emit(ArtNetFoundNodes());
+        // emit(ArtNetNoFoundNodes());
       }
     });
   }

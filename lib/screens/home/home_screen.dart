@@ -7,6 +7,7 @@ import 'package:artnet_app/screens/home/home_event.dart';
 import 'package:artnet_app/screens/home/home_state.dart';
 import 'package:artnet_app/screens/home/widgets/glass_box.dart';
 import 'package:artnet_app/screens/home/widgets/node_box.dart';
+import 'package:artnet_app/screens/search_result_screen.dart/search_result_screen.dart';
 import 'package:artnet_app/services/artnet_module.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -77,9 +78,7 @@ class _HomeScreenState extends State<HomeScreen>
     Connectivity()
         .onConnectivityChanged
         .listen((List<ConnectivityResult> result) async {
-      log(result.length.toString());
       if (result.contains(ConnectivityResult.wifi)) {
-        log("here");
         wifiIP = await wifiInfo.getWifiIP() ?? "";
         wifiSSID = await wifiInfo.getWifiName() ?? "";
         _isWifiConnected = true;
@@ -322,12 +321,22 @@ class _HomeScreenState extends State<HomeScreen>
                                                   ),
                                                   children: [
                                                     TextSpan(
-                                                      text:
-                                                          "\n${ArtNetModule.scanResults.length} device found",
+                                                      text: ArtNetModule
+                                                              .scanResults
+                                                              .isEmpty
+                                                          ? "\nNo device found"
+                                                          : "\n${ArtNetModule.scanResults.length} device found",
                                                       style: TextStyle(
                                                         fontSize: 15.sp,
+                                                        color: ArtNetModule
+                                                                .scanResults
+                                                                .isEmpty
+                                                            ? const Color(
+                                                                0xFFF50057,
+                                                              )
+                                                            : null,
                                                         fontWeight:
-                                                            FontWeight.w300,
+                                                            FontWeight.w500,
                                                       ),
                                                     ),
                                                   ],
@@ -460,7 +469,13 @@ class _HomeScreenState extends State<HomeScreen>
                                     InkWell(
                                       borderRadius: BorderRadius.circular(20.r),
                                       onTap: state is ArtNetFoundNodes
-                                          ? () {}
+                                          ? () {
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const SearchResultScreen()));
+                                            }
                                           : null,
                                       child: GlassBoxTwo(
                                         width: 0.3.sw,
