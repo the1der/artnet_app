@@ -1,19 +1,27 @@
 import 'dart:io';
 
-class ArtNetNode {
-  InternetAddress nodeIp;
-  InternetAddress? netMask, gateWay;
-  String longName, shortName, macAddress;
-  bool dhcpEnabled, dhcpCapable;
+import 'package:artnet_app/models/node_configuration.dart';
 
+class ArtNetNode {
+  InternetAddress ipAddress;
+  InternetAddress? netmask;
+  InternetAddress? gateWay;
+  String longName;
+  String shortName;
+  String macAddress;
+  bool dhcpEnabled, dhcpCapable;
+  NodeConfiguration? nodeConfiguration;
+  bool isAvailable;
   ArtNetNode({
-    required this.nodeIp,
+    required this.ipAddress,
     required this.longName,
     required this.shortName,
     required this.macAddress,
     required this.dhcpCapable,
     required this.dhcpEnabled,
-    this.netMask,
+    this.isAvailable = false,
+    this.nodeConfiguration,
+    this.netmask,
     this.gateWay,
   });
 }

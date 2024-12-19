@@ -21,51 +21,16 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+// TODO handle wifi connecton lost state
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
-  ArtNetNode artNetNode = ArtNetNode(
-    nodeIp: InternetAddress("192.168.1.2"),
-    longName: "Node longName",
-    netMask: InternetAddress("255.255.255.0"),
-    shortName: "Node short Name",
-    macAddress: "9F:1A:3D:AB:C4:22",
-    dhcpCapable: false,
-    dhcpEnabled: true,
-  );
-
-  ArtNetNode artNetNode1 = ArtNetNode(
-      nodeIp: InternetAddress("192.168.1.10"),
-      longName: "Node longName",
-      netMask: InternetAddress("255.255.255.0"),
-      shortName: "ESP32 Node two",
-      macAddress: "9F:4A:3C:AF:C4:75",
-      dhcpCapable: false,
-      dhcpEnabled: true);
-
-  ArtNetNode artNetNode2 = ArtNetNode(
-      nodeIp: InternetAddress("192.168.1.21"),
-      longName: "Node longName",
-      shortName: "Hello Node one one",
-      macAddress: "9A:1C:3A:CB:DF:12",
-      netMask: InternetAddress("255.255.255.0"),
-      dhcpCapable: false,
-      dhcpEnabled: false);
-
-  List<ArtNetNode> nodeList = [];
   bool isWiFiConnected = false;
   late AnimationController _controller;
   WifiInfo wifiInfo = WifiInfo();
   String wifiSSID = "";
   String wifiIP = "";
   bool _isWifiConnected = false;
-  List<Widget> createNodeList(List<ArtNetNode> nodeList) {
-    List<NodeBox> nodeBoxList = [];
-    for (int i = 0; i < nodeList.length; i++) {
-      nodeBoxList.add(NodeBox(artNetNode: nodeList[i]));
-    }
-    return nodeBoxList;
-  }
 
   @override
   void initState() {
@@ -91,11 +56,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    nodeList = [];
-    nodeList.add(artNetNode);
-    nodeList.add(artNetNode1);
-    nodeList.add(artNetNode2);
-
     wifiInfo = WifiInfo();
 
     return BlocProvider(
@@ -470,7 +430,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       borderRadius: BorderRadius.circular(20.r),
                                       onTap: state is ArtNetFoundNodes
                                           ? () {
-                                              Navigator.pushReplacement(
+                                              Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>

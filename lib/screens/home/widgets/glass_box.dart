@@ -76,6 +76,7 @@ class GlassBoxTwo extends StatelessWidget {
     this.boxGradient,
     this.borderRadius,
     this.shape,
+    this.padding,
   });
   Color? boxColor;
   Widget child;
@@ -85,6 +86,7 @@ class GlassBoxTwo extends StatelessWidget {
   Gradient? borderGradient;
   BorderRadiusGeometry? borderRadius;
   BoxShape? shape;
+  EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -135,7 +137,7 @@ class GlassBoxTwo extends StatelessWidget {
             width: width,
             height: height,
             alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: padding ?? const EdgeInsets.symmetric(horizontal: 15.0),
             child: child,
           )
         ],

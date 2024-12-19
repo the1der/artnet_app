@@ -81,7 +81,7 @@ class ArtNetModule {
         await sender!.send(packet, Endpoint.broadcast(port: const Port(6454)));
       } else {
         await sender!.send(packet,
-            Endpoint.unicast(artNetNode.nodeIp, port: const Port(6454)));
+            Endpoint.unicast(artNetNode.ipAddress, port: const Port(6454)));
       }
     } catch (e) {
       // log("Sending failed");
@@ -153,7 +153,7 @@ class ArtNetModule {
 
   static void decOpPollReply(Uint8List recvBuffer) {
     ArtNetNode artNetNode = ArtNetNode(
-      nodeIp: InternetAddress.fromRawAddress(recvBuffer.sublist(207, 211)),
+      ipAddress: InternetAddress.fromRawAddress(recvBuffer.sublist(207, 211)),
       longName: String.fromCharCodes(recvBuffer.sublist(44, 108)),
       shortName: String.fromCharCodes(recvBuffer.sublist(26, 44)),
       macAddress: recvBuffer
@@ -173,7 +173,7 @@ class ArtNetModule {
     nodeGateWay = InternetAddress.fromRawAddress(recvBuffer.sublist(26, 30));
     int pos = isIpExist(nodeIp);
     if (pos != -1) {
-      scanResults[pos].netMask = nodeNetMask;
+      scanResults[pos].netmask = nodeNetMask;
       scanResults[pos].gateWay = nodeGateWay;
       // log(nodeGateWay.address.toString());
     }
@@ -191,7 +191,7 @@ class ArtNetModule {
   static int isIpExist(InternetAddress nodeIp) {
     if (scanResults.isEmpty) return -1;
     for (int i = 0; i < scanResults.length; i++) {
-      if (nodeIp == scanResults[i].nodeIp) return i;
+      if (nodeIp == scanResults[i].ipAddress) return i;
     }
 
     return -1;
