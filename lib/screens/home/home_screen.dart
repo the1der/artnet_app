@@ -7,7 +7,7 @@ import 'package:artnet_app/screens/home/home_event.dart';
 import 'package:artnet_app/screens/home/home_state.dart';
 import 'package:artnet_app/screens/home/widgets/glass_box.dart';
 import 'package:artnet_app/screens/home/widgets/node_box.dart';
-import 'package:artnet_app/screens/search_result_screen.dart/search_result_screen.dart';
+import 'package:artnet_app/screens/search_result/search_result_screen.dart';
 import 'package:artnet_app/services/artnet_module.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';

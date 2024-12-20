@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:artnet_app/models/node_info.dart';
 import 'package:artnet_app/screens/home/widgets/glass_box.dart';
+import 'package:artnet_app/screens/node_light_configuration/node_light_configuration_screen.dart';
 import 'package:artnet_app/screens/node_settings/node_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,7 +43,9 @@ class _NodeBoxState extends State<NodeBox> {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.r),
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+            color: widget.artNetNode.isAvailable
+                ? Theme.of(context).colorScheme.onSurface.withOpacity(0.05)
+                : Colors.grey.withOpacity(0.1),
             border: Border(
               left: BorderSide(
                 color: !widget.artNetNode.isAvailable
@@ -141,36 +144,50 @@ class _NodeBoxState extends State<NodeBox> {
               SizedBox(
                 child: Row(
                   children: [
-                    GlassBoxTwo(
-                      height: 0.05.sh,
-                      width: 0.05.sh,
+                    InkWell(
                       borderRadius: BorderRadius.circular(10.r),
-                      padding: EdgeInsets.zero,
-                      borderGradient: LinearGradient(
-                        colors: [
-                          Colors.white.withOpacity(0.75),
-                          Colors.white.withOpacity(0.3),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                      child: GlassBoxTwo(
+                        height: 0.05.sh,
+                        width: 0.05.sh,
+                        borderRadius: BorderRadius.circular(10.r),
+                        padding: EdgeInsets.zero,
+                        borderGradient: LinearGradient(
+                          colors: [
+                            Colors.white.withOpacity(0.75),
+                            Colors.white.withOpacity(0.3),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        boxGradient: LinearGradient(
+                          colors: [
+                            Colors.red.withOpacity(0.1),
+                            Colors.white.withOpacity(0.05),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        child: Icon(
+                          Icons.lightbulb_outline_rounded,
+                          color: Colors.white.withOpacity(0.9),
+                        ),
                       ),
-                      boxGradient: LinearGradient(
-                        colors: [
-                          Colors.red.withOpacity(0.1),
-                          Colors.white.withOpacity(0.05),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      child: Icon(
-                        Icons.lightbulb_outline_rounded,
-                        color: Colors.white.withOpacity(0.9),
-                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NodeLightConfigurationScreen(
+                              artNetNode: widget.artNetNode,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     SizedBox(
                       width: 0.02.sw,
                     ),
                     InkWell(
+                      borderRadius: BorderRadius.circular(10.r),
                       child: GlassBoxTwo(
                         height: 0.05.sh,
                         width: 0.05.sh,
