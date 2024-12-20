@@ -20,6 +20,12 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
     "Gradient",
     "Advanced",
   ];
+  List<IconData> iconsList = [
+    Icons.palette_outlined,
+    Icons.linear_scale_outlined,
+    Icons.gradient_rounded,
+    Icons.draw_outlined,
+  ];
   void fillWidgets(BuildContext context) {
     gridWidgets = [];
     for (int i = 0; i < 4; i++) {
@@ -30,22 +36,41 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
             setState(() {});
           },
           child: Container(
+            width: 0.4.sw,
+            height: 0.4.sw,
+            clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               color: _selectedMode == i
                   ? Theme.of(context).colorScheme.primary
                   : Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
             ),
-            child: Center(
-              child: Text(
-                titlesList[i],
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: _selectedMode == i
-                      ? Theme.of(context).colorScheme.onPrimary
-                      : null,
+            child: Stack(
+              children: [
+                Center(
+                  child: Text(
+                    titlesList[i],
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: _selectedMode == i
+                          ? Theme.of(context).colorScheme.onPrimary
+                          : null,
+                    ),
+                  ),
                 ),
-              ),
+                _selectedMode == i
+                    ? SizedBox(
+                        child: Icon(
+                          iconsList[i],
+                          size: 0.4.sw,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary
+                              .withOpacity(0.3),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+              ],
             ),
           ),
         ),
@@ -88,12 +113,26 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
             ),
             Center(
               child: Container(
+                width: 0.0025.sw,
+                height: 0.7.sw,
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+              ),
+            ),
+            Center(
+              child: Container(
+                height: 0.0025.sw,
+                width: 0.7.sw,
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+              ),
+            ),
+            Center(
+              child: Container(
                 width: 0.2.sw,
                 height: 0.2.sw,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary,
                   shape: BoxShape.circle,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.grey,
                       offset: Offset(0, 0),
