@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LightStyleSelector extends StatefulWidget {
-  LightStyleSelector({super.key});
-
+  LightStyleSelector({
+    super.key,
+    required this.onModeChanged,
+  });
+  Function(int) onModeChanged;
   @override
   State<LightStyleSelector> createState() => _LightStyleSelectorState();
 }
 
 class _LightStyleSelectorState extends State<LightStyleSelector> {
   int _selectedMode = 1;
-
   List<Widget> gridWidgets = [];
   List<String> titlesList = [
     "Solid",
@@ -33,6 +35,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
         GestureDetector(
           onTap: () {
             _selectedMode = i;
+            widget.onModeChanged(_selectedMode);
             setState(() {});
           },
           child: Container(
@@ -66,7 +69,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
                           color: Theme.of(context)
                               .colorScheme
                               .onPrimary
-                              .withOpacity(0.3),
+                              .withOpacity(0.2),
                         ),
                       )
                     : const SizedBox.shrink(),

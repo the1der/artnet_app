@@ -25,6 +25,7 @@ dependencies:
   wifi_info_flutter: ^2.0.2
   connectivity_plus: ^6.1.0
   wifi_ip_details: ^1.0.0
+  flutter_colorpicker: ^1.1.0
   
 dev_dependencies:
   flutter_test:
