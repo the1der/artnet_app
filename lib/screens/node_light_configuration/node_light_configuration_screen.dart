@@ -24,6 +24,7 @@ class _NodeLightConfigurationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -35,25 +36,27 @@ class _NodeLightConfigurationScreenState
         child: SizedBox(
           width: 1.sw,
           height: 1.sh,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 0.05.sh,
-              ),
-              LightStyleSelector(
-                onModeChanged: (newMode) {
-                  _oldMode = _selectedMode;
-                  _selectedMode = newMode;
-                  setState(() {});
-                },
-              ),
-              SizedBox(height: 0.05.sh),
-              LightStyleConfig(
-                selectedMode: _selectedMode,
-                oldMode: _oldMode,
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 0.05.sh,
+                ),
+                LightStyleSelector(
+                  onModeChanged: (newMode) {
+                    _oldMode = _selectedMode;
+                    _selectedMode = newMode;
+                    setState(() {});
+                  },
+                ),
+                SizedBox(height: 0.05.sh),
+                LightStyleConfig(
+                  selectedMode: _selectedMode,
+                  oldMode: _oldMode,
+                ),
+              ],
+            ),
           ),
         ),
       ),

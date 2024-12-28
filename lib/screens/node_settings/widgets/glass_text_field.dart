@@ -68,7 +68,7 @@ class _GLassTextFieldState extends State<GLassTextField> {
             child: Text(
               widget.title,
               style: TextStyle(
-                fontSize: 35.sp,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.w100,
                 color: focusNode.hasFocus
                     ? isCorrect
@@ -103,7 +103,7 @@ class _GLassTextFieldState extends State<GLassTextField> {
                 keyboardType: widget.textInputType,
                 maxLength: widget.maxLength,
                 style: TextStyle(
-                  fontSize: 40.sp,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w100,
                   color: isCorrect
                       ? Colors.white.withOpacity(0.90)
@@ -117,7 +117,7 @@ class _GLassTextFieldState extends State<GLassTextField> {
                   border: InputBorder.none,
                   hintText: widget.oldValue,
                   hintStyle: TextStyle(
-                    fontSize: 40.sp,
+                    fontSize: 20.sp,
                   ),
                 ),
                 focusNode: focusNode,
@@ -143,7 +143,7 @@ class _GLassTextFieldState extends State<GLassTextField> {
                       "* ${widget.errorText} *",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 30.sp,
+                        fontSize: 15.sp,
                         color: Colors.orange[700],
                         fontWeight: FontWeight.w100,
                       ),

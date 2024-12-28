@@ -14,19 +14,19 @@ class LightStyleSelector extends StatefulWidget {
 }
 
 class _LightStyleSelectorState extends State<LightStyleSelector> {
-  int _selectedMode = 1;
+  int _selectedMode = 0;
   List<Widget> gridWidgets = [];
   List<String> titlesList = [
     "Solid",
     "Pattern",
     "Gradient",
-    "Advanced",
+    "Library",
   ];
   List<IconData> iconsList = [
     Icons.palette_outlined,
     Icons.linear_scale_outlined,
     Icons.gradient_rounded,
-    Icons.draw_outlined,
+    Icons.folder_special_outlined,
   ];
   void fillWidgets(BuildContext context) {
     gridWidgets = [];

@@ -15,7 +15,7 @@ class LightStyleConfig extends StatelessWidget {
     "Solid",
     "Pattern",
     "Gradient",
-    "Advanced",
+    "Library",
   ];
   void fillWidgets() {
     widgetsList = [];
@@ -47,7 +47,7 @@ class LightStyleConfig extends StatelessWidget {
     fillWidgets();
     return Container(
       width: 1.sw,
-      height: 0.4.sh,
+      height: 0.5.sh,
       child: Stack(
         children: widgetsList,
       ),
