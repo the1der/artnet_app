@@ -50,7 +50,7 @@ class _NodeBoxState extends State<NodeBox> {
               left: BorderSide(
                 color: !widget.artNetNode.isAvailable
                     ? Colors.grey
-                    : widget.artNetNode.nodeConfiguration == null
+                    : widget.artNetNode.nodeLightConfiguration == null
                         ? Colors.amber
                         : Colors.green,
                 width: 0.015.sw,

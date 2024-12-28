@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:artnet_app/models/node_configuration.dart';
+import 'package:artnet_app/models/node_light_configuration.dart';
 
 class ArtNetNode {
   InternetAddress ipAddress;
@@ -10,7 +10,7 @@ class ArtNetNode {
   String shortName;
   String macAddress;
   bool dhcpEnabled, dhcpCapable;
-  NodeConfiguration? nodeConfiguration;
+  NodeLightConfiguration? nodeLightConfiguration;
   bool isAvailable;
   ArtNetNode({
     required this.ipAddress,
@@ -20,7 +20,7 @@ class ArtNetNode {
     required this.dhcpCapable,
     required this.dhcpEnabled,
     this.isAvailable = false,
-    this.nodeConfiguration,
+    this.nodeLightConfiguration,
     this.netmask,
     this.gateWay,
   });

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:artnet_app/screens/node_light_configuration/widgets/color_slider.dart';
+import 'package:artnet_app/screens/node_light_configuration/widgets/solid_color_history.dart';
 import 'package:artnet_app/screens/node_settings/widgets/glass_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -28,6 +29,12 @@ class _SolidColorConfigState extends State<SolidColorConfig> {
             letterSpacing: 10.sp,
             wordSpacing: 15.sp,
           ),
+        ),
+        SolidColorHistory(
+          onConfigSelected: (newConfig) {
+            currentColor = newConfig.color;
+            setState(() {});
+          },
         ),
         ColorSlider(
           colorComponent: ColorComponent.red,

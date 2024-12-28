@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:artnet_app/models/node_configuration.dart';
+import 'package:artnet_app/models/node_light_configuration.dart';
 import 'package:artnet_app/models/node_info.dart';
 import 'package:artnet_app/screens/home/widgets/glass_box.dart';
 import 'package:artnet_app/screens/home/widgets/node_box.dart';
@@ -39,7 +39,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
     dhcpCapable: false,
     dhcpEnabled: true,
     isAvailable: true,
-    nodeConfiguration: NodeConfiguration(),
+    nodeLightConfiguration: NodeLightConfiguration(),
   );
 
   ArtNetNode artNetNode2 = ArtNetNode(
