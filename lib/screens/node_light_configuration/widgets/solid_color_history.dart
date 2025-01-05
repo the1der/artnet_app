@@ -1,4 +1,4 @@
-import 'package:artnet_app/models/node_light_configuration.dart';
+import 'package:artnet_app/data/models/node_light_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

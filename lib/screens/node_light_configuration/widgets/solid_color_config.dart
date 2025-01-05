@@ -6,6 +6,7 @@ import 'package:artnet_app/screens/node_settings/widgets/glass_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:interactive_slider/interactive_slider_controller.dart';
 
 class SolidColorConfig extends StatefulWidget {
   SolidColorConfig({super.key});
@@ -15,7 +16,20 @@ class SolidColorConfig extends StatefulWidget {
 }
 
 class _SolidColorConfigState extends State<SolidColorConfig> {
-  Color currentColor = Color(0xff443a49);
+  Color currentColor = Color(0xFFF43AC9);
+  bool _historyLoaded = true;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
+  }
+
+  InteractiveSliderController interactiveSliderController1 =
+      InteractiveSliderController(0);
+  InteractiveSliderController interactiveSliderController2 =
+      InteractiveSliderController(0);
+  InteractiveSliderController interactiveSliderController3 =
+      InteractiveSliderController(0);
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +44,23 @@ class _SolidColorConfigState extends State<SolidColorConfig> {
             wordSpacing: 15.sp,
           ),
         ),
-        SolidColorHistory(
-          onConfigSelected: (newConfig) {
-            currentColor = newConfig.color;
-            setState(() {});
-          },
-        ),
+        !_historyLoaded
+            ? Container(
+                height: 0.075.sh,
+                width: 0.95.sw,
+                alignment: Alignment.center,
+                child: SizedBox(
+                  height: 0.005.sh,
+                  width: 0.85.sw,
+                  child: const LinearProgressIndicator(),
+                ),
+              )
+            : SolidColorHistory(
+                onConfigSelected: (newConfig) {
+                  currentColor = newConfig.color;
+                  setState(() {});
+                },
+              ),
         ColorSlider(
           colorComponent: ColorComponent.red,
           value: currentColor.red,
@@ -43,6 +68,7 @@ class _SolidColorConfigState extends State<SolidColorConfig> {
             currentColor = currentColor.withRed(newValue);
             setState(() {});
           },
+          interactiveSliderController: interactiveSliderController1,
         ),
         ColorSlider(
           colorComponent: ColorComponent.green,
@@ -51,6 +77,7 @@ class _SolidColorConfigState extends State<SolidColorConfig> {
             currentColor = currentColor.withGreen(newValue);
             setState(() {});
           },
+          interactiveSliderController: interactiveSliderController2,
         ),
         ColorSlider(
           colorComponent: ColorComponent.blue,
@@ -59,6 +86,7 @@ class _SolidColorConfigState extends State<SolidColorConfig> {
             currentColor = currentColor.withBlue(newValue);
             setState(() {});
           },
+          interactiveSliderController: interactiveSliderController3,
         ),
         GestureDetector(
           onTap: () {
@@ -96,9 +124,14 @@ class _SolidColorConfigState extends State<SolidColorConfig> {
             width: 0.75.sw,
             height: 0.075.sh,
             decoration: BoxDecoration(
-              color: currentColor,
-              borderRadius: BorderRadius.circular(15.r),
-            ),
+                color: currentColor,
+                borderRadius: BorderRadius.circular(15.r),
+                border: Border.all(
+                  width: 0.005.sw,
+                  color: currentColor.computeLuminance() < 0.5
+                      ? Theme.of(context).colorScheme.onSurface
+                      : Theme.of(context).colorScheme.surface,
+                )),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

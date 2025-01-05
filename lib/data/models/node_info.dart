@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:artnet_app/models/node_light_configuration.dart';
+import 'package:artnet_app/data/models/node_light_configuration.dart';
 
 class ArtNetNode {
   InternetAddress ipAddress;

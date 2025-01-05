@@ -145,7 +145,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
                   ],
                 ),
                 child: Icon(
-                  Icons.power_settings_new_rounded,
+                  Icons.upgrade_rounded,
                   size: 0.1.sw,
                   color: Theme.of(context).colorScheme.surface,
                 ),

@@ -12,10 +12,13 @@ class ColorSlider extends StatefulWidget {
     required this.colorComponent,
     required this.value,
     required this.onChenged,
+    required this.interactiveSliderController,
   });
   ColorComponent colorComponent;
   int value;
   Function(int) onChenged;
+  InteractiveSliderController interactiveSliderController;
+
   @override
   State<ColorSlider> createState() => _ColorSliderState();
 }
@@ -57,21 +60,20 @@ class _ColorSliderState extends State<ColorSlider> {
       // if (_value != widget.value) {
       if (true) {
         _value = widget.value;
-        _textEditingController.text =
-            widget.value.toRadixString(16).padLeft(2, '0');
+        // _textEditingController.text =
+        //     widget.value.toRadixString(16).padLeft(2, '0');
         _interactiveSliderController.value = _value / 256;
         setState(() {});
-        log("khra");
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    _value = widget.value;
-    _textEditingController.text =
-        widget.value.toRadixString(16).padLeft(2, '0').toUpperCase();
-    _interactiveSliderController.value = _value / 256;
+    // _value = widget.value;
+    // _textEditingController.text = _value.toRadixString(16).toUpperCase();
+    // _interactiveSliderController.value = _value / 256;
+
     return SizedBox(
       width: 0.95.sw,
       height: 0.075.sh,
@@ -90,21 +92,27 @@ class _ColorSliderState extends State<ColorSlider> {
             height: 0.1.sh,
             child: InteractiveSlider(
               min: 0,
-              max: 255,
-              controller: _interactiveSliderController,
+              max: 0xFF,
+              controller: widget.interactiveSliderController,
               backgroundColor: _baseColor.withOpacity(0.2),
               foregroundColor: _baseColor,
+              // onChanged: widget.onChenged2,
               onChanged: (newValue) {
-                _value = newValue.toInt();
-                _textEditingController.text = _value
+                // _value = newValue.toInt();
+                // log('here');
+                _textEditingController.text = newValue
+                    .toInt()
                     .toRadixString(16)
                     .toString()
                     .toUpperCase()
                     .padLeft(2, '0');
-                try {
-                  widget.onChenged(_value);
-                } catch (e) {}
-                setState(() {});
+                // setState(() {});
+                widget.onChenged(newValue.toInt());
+
+                // try {
+                // widget.onChenged(_value);
+                // } catch (e) {}
+                // setState(() {});
               },
             ),
           ),
@@ -157,11 +165,19 @@ class _ColorSliderState extends State<ColorSlider> {
               onChanged: (newValue) {
                 if (newValue.isNotEmpty) {
                   _value = int.parse(newValue, radix: 16);
+                  // _value = _value > 2 ? _value + 2 : _value;
+                  log(_value.toString());
+                  widget.interactiveSliderController.value = _value / 256;
+                  // _interactiveSliderController.value = _value / 256;
+                  // _textEditingController.text =
+                  //     _textEditingController.text.toUpperCase().padLeft(2, '0');
+                  widget.onChenged(_value);
+                } else {
+                  _value = 0;
+                  widget.interactiveSliderController.value = _value / 256;
+                  // _interactiveSliderController.value = _value / 256;
+                  widget.onChenged(_value);
                 }
-                _interactiveSliderController.value = _value / 256;
-                _textEditingController.text =
-                    _textEditingController.text.toUpperCase().padLeft(2, '0');
-                widget.onChenged(_value);
                 setState(() {});
               },
             ),

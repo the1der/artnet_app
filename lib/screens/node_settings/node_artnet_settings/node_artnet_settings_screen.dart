@@ -1,4 +1,4 @@
-import 'package:artnet_app/models/node_info.dart';
+import 'package:artnet_app/data/models/node_info.dart';
 import 'package:artnet_app/screens/node_settings/widgets/glass_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

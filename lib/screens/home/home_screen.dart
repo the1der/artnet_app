@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:developer';
 
-import 'package:artnet_app/models/node_info.dart';
+import 'package:artnet_app/data/models/node_info.dart';
 import 'package:artnet_app/screens/home/home_bloc.dart';
 import 'package:artnet_app/screens/home/home_event.dart';
 import 'package:artnet_app/screens/home/home_state.dart';

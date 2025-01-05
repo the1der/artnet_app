@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:artnet_app/models/node_info.dart';
+import 'package:artnet_app/data/models/node_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:tab_container/tab_container.dart';

@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:artnet_app/models/artnet_opcodes.dart';
-import 'package:artnet_app/models/node_info.dart';
-import 'package:artnet_app/models/op_ip_prog_packet.dart';
+import 'package:artnet_app/data/models/artnet_opcodes.dart';
+import 'package:artnet_app/data/models/node_info.dart';
+import 'package:artnet_app/data/models/op_ip_prog_packet.dart';
 import 'package:udp/udp.dart';
 
 class ArtNetModule {

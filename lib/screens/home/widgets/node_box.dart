@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:artnet_app/models/node_info.dart';
+import 'package:artnet_app/data/models/node_info.dart';
 import 'package:artnet_app/screens/home/widgets/glass_box.dart';
 import 'package:artnet_app/screens/node_light_configuration/node_light_configuration_screen.dart';
 import 'package:artnet_app/screens/node_settings/node_settings_screen.dart';
