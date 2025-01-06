@@ -7,8 +7,10 @@ class LightStyleSelector extends StatefulWidget {
   LightStyleSelector({
     super.key,
     required this.onModeChanged,
+    required this.onLightWrite,
   });
   Function(int) onModeChanged;
+  Future<void> Function() onLightWrite;
   @override
   State<LightStyleSelector> createState() => _LightStyleSelectorState();
 }
@@ -16,6 +18,7 @@ class LightStyleSelector extends StatefulWidget {
 class _LightStyleSelectorState extends State<LightStyleSelector> {
   int _selectedMode = 0;
   List<Widget> gridWidgets = [];
+  bool _isWriting = false;
   List<String> titlesList = [
     "Solid",
     "Pattern",
@@ -28,6 +31,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
     Icons.gradient_rounded,
     Icons.folder_special_outlined,
   ];
+
   void fillWidgets(BuildContext context) {
     gridWidgets = [];
     for (int i = 0; i < 4; i++) {
@@ -129,25 +133,54 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
               ),
             ),
             Center(
-              child: Container(
-                width: 0.2.sw,
-                height: 0.2.sw,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
-                  shape: BoxShape.circle,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 0),
-                      blurRadius: 5,
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Icon(
-                  Icons.upgrade_rounded,
-                  size: 0.1.sw,
-                  color: Theme.of(context).colorScheme.surface,
+              child: GestureDetector(
+                onTap: !_isWriting
+                    ? () async {
+                        _isWriting = true;
+                        setState(() {});
+                        await widget.onLightWrite();
+                        _isWriting = false;
+                        setState(() {});
+                      }
+                    : null,
+                child: Container(
+                  width: 0.2.sw,
+                  height: 0.2.sw,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    shape: BoxShape.circle,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0, 0),
+                        blurRadius: 5,
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Icon(
+                        Icons.upgrade_rounded,
+                        size: 0.1.sw,
+                        color: Theme.of(context).colorScheme.surface,
+                      ),
+                      _isWriting
+                          ? SizedBox(
+                              width: 0.2.sw,
+                              height: 0.2.sw,
+                              child: CircularProgressIndicator(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.5),
+                                strokeWidth: 0.03.sw,
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                    ],
+                  ),
                 ),
               ),
             )

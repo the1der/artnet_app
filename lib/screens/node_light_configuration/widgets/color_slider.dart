@@ -29,7 +29,7 @@ class _ColorSliderState extends State<ColorSlider> {
   late Color _baseColor;
   late String _label;
   TextEditingController _textEditingController = TextEditingController();
-  late InteractiveSliderController _interactiveSliderController;
+  // late InteractiveSliderController _interactiveSliderController;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _ColorSliderState extends State<ColorSlider> {
     _value = widget.value;
     _textEditingController.text =
         widget.value.toRadixString(16).padLeft(2, '0');
-    _interactiveSliderController = InteractiveSliderController(_value / 256);
+    // _interactiveSliderController = InteractiveSliderController(_value / 256);
 
     switch (widget.colorComponent) {
       case ColorComponent.red:
@@ -62,7 +62,7 @@ class _ColorSliderState extends State<ColorSlider> {
         _value = widget.value;
         // _textEditingController.text =
         //     widget.value.toRadixString(16).padLeft(2, '0');
-        _interactiveSliderController.value = _value / 256;
+        // _interactiveSliderController.value = _value / 256;
         setState(() {});
       }
     });
@@ -71,9 +71,7 @@ class _ColorSliderState extends State<ColorSlider> {
   @override
   Widget build(BuildContext context) {
     // _value = widget.value;
-    // _textEditingController.text = _value.toRadixString(16).toUpperCase();
-    // _interactiveSliderController.value = _value / 256;
-
+    _textEditingController.text = widget.value.toRadixString(16).toUpperCase();
     return SizedBox(
       width: 0.95.sw,
       height: 0.075.sh,

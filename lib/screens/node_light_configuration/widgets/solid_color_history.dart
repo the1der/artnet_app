@@ -1,28 +1,28 @@
 import 'package:artnet_app/data/models/node_light_configuration.dart';
+import 'package:artnet_app/domain/repositories/solid_config_history_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SolidColorHistory extends StatelessWidget {
+class SolidColorHistory extends StatefulWidget {
   SolidColorHistory({
     super.key,
     required this.onConfigSelected,
+    required this.historyList,
   });
   Function(SolidColorConfigParameters) onConfigSelected;
-  List<SolidColorConfigParameters> historyList = [
-    SolidColorConfigParameters(color: Colors.red),
-    SolidColorConfigParameters(color: Colors.amber),
-    SolidColorConfigParameters(color: Colors.green),
-    SolidColorConfigParameters(color: Colors.blue),
-    SolidColorConfigParameters(color: Colors.pink),
-    SolidColorConfigParameters(color: Colors.purple),
-    SolidColorConfigParameters(color: Colors.orange),
-    SolidColorConfigParameters(color: Colors.cyan),
-  ];
+  List<SolidColorConfigParameters> historyList;
+
+  @override
+  State<SolidColorHistory> createState() => _SolidColorHistoryState();
+}
+
+class _SolidColorHistoryState extends State<SolidColorHistory> {
   List<Widget> historyWidgets = [];
+
   void fillWidgets(BuildContext context) {
     historyWidgets = [];
 
-    historyList.forEach((configuration) {
+    widget.historyList.forEach((configuration) {
       historyWidgets.add(
         Padding(
           padding: EdgeInsets.all(0.005.sh),
@@ -41,12 +41,13 @@ class SolidColorHistory extends StatelessWidget {
               ),
             ),
             onTap: () {
-              onConfigSelected(configuration);
+              widget.onConfigSelected(configuration);
             },
           ),
         ),
       );
     });
+    historyWidgets = historyWidgets.reversed.toList();
   }
 
   @override
@@ -57,13 +58,19 @@ class SolidColorHistory extends StatelessWidget {
       width: 0.95.sw,
       child: Row(
         children: [
-          Container(
-            height: 0.075.sh,
-            width: 0.075.sh,
-            child: Icon(
-              Icons.history_rounded,
-              color: Theme.of(context).colorScheme.onSurface,
-              size: 0.04.sh,
+          GestureDetector(
+            onLongPress: () async {
+              SolidColorHistortyRepositoryImpl().clearHistory();
+              setState(() {});
+            },
+            child: Container(
+              height: 0.075.sh,
+              width: 0.075.sh,
+              child: Icon(
+                Icons.history_rounded,
+                color: Theme.of(context).colorScheme.onSurface,
+                size: 0.04.sh,
+              ),
             ),
           ),
           SizedBox(

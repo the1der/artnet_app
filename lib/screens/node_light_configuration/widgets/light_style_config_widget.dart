@@ -1,16 +1,25 @@
-import 'package:artnet_app/screens/node_light_configuration/widgets/solid_color_config.dart';
+import 'dart:developer';
+
+import 'package:artnet_app/data/models/node_light_configuration.dart';
+import 'package:artnet_app/screens/node_light_configuration/widgets/solid_color_config_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LightStyleConfig extends StatelessWidget {
-  LightStyleConfig({
+class LightStyleConfigWidget extends StatelessWidget {
+  LightStyleConfigWidget({
     super.key,
     required this.selectedMode,
     required this.oldMode,
+    required this.allConfigList,
+    required this.allConfigHistoryList,
+    required this.onConfigChange,
   });
+  List<NodeLightConfiguration> allConfigList;
+  List<List<NodeLightConfiguration>> allConfigHistoryList;
   List<Widget> widgetsList = [];
   int selectedMode;
   int oldMode;
+  Function(List<NodeLightConfiguration>) onConfigChange;
   List<String> titlesList = [
     "Solid",
     "Pattern",
@@ -28,7 +37,17 @@ class LightStyleConfig extends StatelessWidget {
         bottom: 0,
         child: Center(
           child: i == 0
-              ? SolidColorConfig()
+              ? SolidColorConfigWidget(
+                  solidColorConfigParameters:
+                      allConfigList[0] as SolidColorConfigParameters,
+                  historyList: allConfigHistoryList[0]
+                      as List<SolidColorConfigParameters>,
+                  onChanged: (newSolidColorConfig) {
+                    (allConfigList[0] as SolidColorConfigParameters).color =
+                        newSolidColorConfig.color;
+                    onConfigChange(allConfigList);
+                  },
+                )
               : Text(
                   titlesList[i],
                   style: TextStyle(

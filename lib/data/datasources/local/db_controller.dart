@@ -37,11 +37,24 @@ class DBController {
     return await db.query(table);
   }
 
+  Future<int> delete(
+      {required String table,
+      required String where,
+      required List<Object?> whereArgs}) async {
+    final db = await database;
+    return await db.delete(table, where: where, whereArgs: whereArgs);
+  }
+
+  Future clear({required String table}) async {
+    final db = await database;
+    await db.delete(table);
+  }
+
   Future<void> createSolidConfigHistory(Database db) async {
     await db.execute('''
           CREATE TABLE solid_config_history (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            color INTEGER,
+            color INTEGER
           )
         ''');
   }
