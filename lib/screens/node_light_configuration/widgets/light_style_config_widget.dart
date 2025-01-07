@@ -64,9 +64,9 @@ class LightStyleConfigWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     fillWidgets();
-    return Container(
+    return SizedBox(
       width: 1.sw,
-      height: 0.5.sh,
+      height: 0.8.sh - 0.8.sw,
       child: Stack(
         children: widgetsList,
       ),

@@ -12,12 +12,10 @@ class ColorSlider extends StatefulWidget {
     required this.colorComponent,
     required this.value,
     required this.onChenged,
-    required this.interactiveSliderController,
   });
   ColorComponent colorComponent;
   int value;
   Function(int) onChenged;
-  InteractiveSliderController interactiveSliderController;
 
   @override
   State<ColorSlider> createState() => _ColorSliderState();
@@ -26,6 +24,7 @@ class ColorSlider extends StatefulWidget {
 class _ColorSliderState extends State<ColorSlider> {
   late int _value;
 
+  late InteractiveSliderController interactiveSliderController;
   late Color _baseColor;
   late String _label;
   TextEditingController _textEditingController = TextEditingController();
@@ -38,11 +37,11 @@ class _ColorSliderState extends State<ColorSlider> {
     _value = widget.value;
     _textEditingController.text =
         widget.value.toRadixString(16).padLeft(2, '0');
-    // _interactiveSliderController = InteractiveSliderController(_value / 256);
-
+    interactiveSliderController = InteractiveSliderController(_value / 256);
+    InteractiveSliderController(widget.value.toDouble());
     switch (widget.colorComponent) {
       case ColorComponent.red:
-        _baseColor = Colors.red.shade900;
+        _baseColor = const Color.fromARGB(255, 255, 0, 0);
         _label = "R";
         break;
 
@@ -73,7 +72,7 @@ class _ColorSliderState extends State<ColorSlider> {
     // _value = widget.value;
     _textEditingController.text = widget.value.toRadixString(16).toUpperCase();
     return SizedBox(
-      width: 0.95.sw,
+      width: 0.85.sw,
       height: 0.075.sh,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -86,12 +85,12 @@ class _ColorSliderState extends State<ColorSlider> {
             ),
           ),
           SizedBox(
-            width: 0.6.sw,
+            width: 0.50.sw,
             height: 0.1.sh,
             child: InteractiveSlider(
               min: 0,
               max: 0xFF,
-              controller: widget.interactiveSliderController,
+              controller: interactiveSliderController,
               backgroundColor: _baseColor.withOpacity(0.2),
               foregroundColor: _baseColor,
               // onChanged: widget.onChenged2,
@@ -164,16 +163,11 @@ class _ColorSliderState extends State<ColorSlider> {
                 if (newValue.isNotEmpty) {
                   _value = int.parse(newValue, radix: 16);
                   // _value = _value > 2 ? _value + 2 : _value;
-                  log(_value.toString());
-                  widget.interactiveSliderController.value = _value / 256;
-                  // _interactiveSliderController.value = _value / 256;
-                  // _textEditingController.text =
-                  //     _textEditingController.text.toUpperCase().padLeft(2, '0');
+                  interactiveSliderController.value = _value / 256;
                   widget.onChenged(_value);
                 } else {
                   _value = 0;
-                  widget.interactiveSliderController.value = _value / 256;
-                  // _interactiveSliderController.value = _value / 256;
+                  interactiveSliderController.value = 0;
                   widget.onChenged(_value);
                 }
                 setState(() {});

@@ -100,7 +100,7 @@ class _NodeLightConfigurationScreenState
         child: Container(
           width: 1.sw,
           height: 1.sh,
-          alignment: Alignment.center,
+          alignment: Alignment.topCenter,
           child: _isLoadingHistory
               ? SizedBox(
                   width: 0.35.sw,
@@ -110,6 +110,7 @@ class _NodeLightConfigurationScreenState
               : SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(
                         height: 0.05.sh,
@@ -122,7 +123,9 @@ class _NodeLightConfigurationScreenState
                         },
                         onLightWrite: onLightWrite,
                       ),
-                      SizedBox(height: 0.05.sh),
+                      SizedBox(
+                        height: 0.05.sh,
+                      ),
                       LightStyleConfigWidget(
                         selectedMode: _selectedMode,
                         oldMode: _oldMode,
