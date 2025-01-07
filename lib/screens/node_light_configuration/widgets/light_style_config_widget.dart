@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:artnet_app/data/models/node_light_configuration.dart';
 import 'package:artnet_app/screens/node_light_configuration/widgets/solid_color_config_widget.dart';
 import 'package:flutter/material.dart';

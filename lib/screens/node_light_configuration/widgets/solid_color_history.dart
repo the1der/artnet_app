@@ -22,7 +22,7 @@ class _SolidColorHistoryState extends State<SolidColorHistory> {
   void fillWidgets(BuildContext context) {
     historyWidgets = [];
 
-    widget.historyList.forEach((configuration) {
+    for (SolidColorConfigParameters configuration in widget.historyList) {
       historyWidgets.add(
         Padding(
           padding: EdgeInsets.all(0.005.sh),
@@ -34,11 +34,17 @@ class _SolidColorHistoryState extends State<SolidColorHistory> {
               height: 0.04.sh,
               width: 0.04.sh,
               decoration: BoxDecoration(
-                color: configuration.color,
-                borderRadius: BorderRadius.circular(
-                  12.r,
-                ),
-              ),
+                  color: configuration.color,
+                  borderRadius: BorderRadius.circular(
+                    12.r,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: configuration.color.withOpacity(0.6), // Glow color
+                      blurRadius: 5,
+                      spreadRadius: 2,
+                    ),
+                  ]),
             ),
             onTap: () {
               widget.onConfigSelected(configuration);
@@ -46,14 +52,14 @@ class _SolidColorHistoryState extends State<SolidColorHistory> {
           ),
         ),
       );
-    });
+    }
     historyWidgets = historyWidgets.reversed.toList();
   }
 
   @override
   Widget build(BuildContext context) {
     fillWidgets(context);
-    return Container(
+    return SizedBox(
       height: 0.075.sh,
       width: 0.95.sw,
       child: Row(
@@ -63,7 +69,7 @@ class _SolidColorHistoryState extends State<SolidColorHistory> {
               SolidColorHistortyRepositoryImpl().clearHistory();
               setState(() {});
             },
-            child: Container(
+            child: SizedBox(
               height: 0.075.sh,
               width: 0.075.sh,
               child: Icon(

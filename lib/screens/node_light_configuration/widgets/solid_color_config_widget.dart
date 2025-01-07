@@ -47,20 +47,11 @@ class _SolidColorConfigState extends State<SolidColorConfigWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // interactiveSliderControllerRed.value =
-    //     widget.solidColorConfigParameters.color.red.toDouble() / 256;
-    // interactiveSliderControllerGreen.value =
-    //     widget.solidColorConfigParameters.color.green.toDouble() / 256;
-    // interactiveSliderControllerBlue.value =
-    //     widget.solidColorConfigParameters.color.blue.toDouble() / 256;
     return Container(
       width: 1.sw,
       height: 0.8.sh - 0.8.sw,
-      // color: Colors.amber,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
           Align(
             alignment: Alignment.center,
@@ -77,7 +68,6 @@ class _SolidColorConfigState extends State<SolidColorConfigWidget> {
           SolidColorHistory(
             historyList: widget.historyList,
             onConfigSelected: (newConfig) {
-              // widget.solidColorConfigParameters.color = newConfig.color;
               widget.onChanged(
                   SolidColorConfigParameters(color: newConfig.color));
               setState(() {});
@@ -103,11 +93,7 @@ class _SolidColorConfigState extends State<SolidColorConfigWidget> {
                                 colorComponent: ColorComponent.red,
                                 value:
                                     widget.solidColorConfigParameters.color.red,
-                                // interactiveSliderController:
-                                //     interactiveSliderControllerRed,
                                 onChenged: (newValue) {
-                                  // widget.solidColorConfigParameters.color =
-                                  //     widget.solidColorConfigParameters.color.withRed(newValue);
                                   try {
                                     widget.onChanged(
                                       SolidColorConfigParameters(
@@ -257,81 +243,6 @@ class _SolidColorConfigState extends State<SolidColorConfigWidget> {
               ],
             ),
           ),
-          // GestureDetector(
-          //   onTap: () {
-          //     showDialog(
-          //       builder: (context) => AlertDialog(
-          //         title: const Text('Pick a color!'),
-          //         content: SingleChildScrollView(
-          //           child: ColorPicker(
-          //             paletteType: PaletteType.hueWheel,
-          //             pickerColor: widget.solidColorConfigParameters.color,
-          //             enableAlpha: false,
-          //             onColorChanged: (newColor) {
-          //               // widget.solidColorConfigParameters.color = newColor;
-          //               widget.onChanged(
-          //                   SolidColorConfigParameters(color: newColor));
-          //               setState(() {});
-          //             },
-          //           ),
-          //         ),
-          //         actions: <Widget>[
-          //           Center(
-          //             child: ElevatedButton(
-          //               child: const Text('Done'),
-          //               onPressed: () {
-          //                 // currentColor = currentColor;
-          //                 Navigator.of(context).pop();
-          //                 setState(() {});
-          //               },
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //       context: context,
-          //     );
-          //   },
-          //   child: Container(
-          //     width: 0.75.sw,
-          //     height: 0.075.sh,
-          //     decoration: BoxDecoration(
-          //         color: widget.solidColorConfigParameters.color,
-          //         borderRadius: BorderRadius.circular(15.r),
-          //         border: Border.all(
-          //           width: 0.005.sw,
-          //           color: widget.solidColorConfigParameters.color
-          //                       .computeLuminance() <
-          //                   0.5
-          //               ? Theme.of(context).colorScheme.onSurface
-          //               : Theme.of(context).colorScheme.surface,
-          //         )),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         Text(
-          //           "Color picker".toUpperCase(),
-          //           style: TextStyle(
-          //             fontSize: 20.sp,
-          //             letterSpacing: 5.sp,
-          //             fontWeight: FontWeight.w500,
-          //             color: widget.solidColorConfigParameters.color
-          //                         .computeLuminance() <
-          //                     0.5
-          //                 ? Theme.of(context).colorScheme.onSurface
-          //                 : Theme.of(context).colorScheme.surface,
-          //           ),
-          //         ),
-          //         Icon(
-          //           Icons.colorize_outlined,
-          //           color: widget.solidColorConfigParameters.color
-          //                       .computeLuminance() <
-          //                   0.5
-          //               ? Theme.of(context).colorScheme.onSurface
-          //               : Theme.of(context).colorScheme.surface,
-          //         )
-          //       ],
-          //     ),
-          //   ),
           // ),
         ],
       ),

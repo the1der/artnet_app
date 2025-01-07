@@ -57,10 +57,11 @@ class _NodeLightConfigurationScreenState
       if (solidConfigHistory.isNotEmpty) {
         solidColorConfigParameters.color = solidConfigHistory.last.color;
         log(solidConfigHistory.length.toString());
-      } else
+      } else {
         solidColorConfigParameters = SolidColorConfigParameters(
           color: Colors.cyan,
         );
+      }
       _isLoadingHistory = false;
       setState(() {});
     });

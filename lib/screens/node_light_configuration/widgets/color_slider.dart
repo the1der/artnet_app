@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:artnet_app/screens/home/widgets/glass_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,11 +26,9 @@ class _ColorSliderState extends State<ColorSlider> {
   late Color _baseColor;
   late String _label;
   TextEditingController _textEditingController = TextEditingController();
-  // late InteractiveSliderController _interactiveSliderController;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _value = widget.value;
     _textEditingController.text =
@@ -93,23 +89,14 @@ class _ColorSliderState extends State<ColorSlider> {
               controller: interactiveSliderController,
               backgroundColor: _baseColor.withOpacity(0.2),
               foregroundColor: _baseColor,
-              // onChanged: widget.onChenged2,
               onChanged: (newValue) {
-                // _value = newValue.toInt();
-                // log('here');
                 _textEditingController.text = newValue
                     .toInt()
                     .toRadixString(16)
                     .toString()
                     .toUpperCase()
                     .padLeft(2, '0');
-                // setState(() {});
                 widget.onChenged(newValue.toInt());
-
-                // try {
-                // widget.onChenged(_value);
-                // } catch (e) {}
-                // setState(() {});
               },
             ),
           ),
@@ -162,7 +149,6 @@ class _ColorSliderState extends State<ColorSlider> {
               onChanged: (newValue) {
                 if (newValue.isNotEmpty) {
                   _value = int.parse(newValue, radix: 16);
-                  // _value = _value > 2 ? _value + 2 : _value;
                   interactiveSliderController.value = _value / 256;
                   widget.onChenged(_value);
                 } else {
