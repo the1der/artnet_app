@@ -149,54 +149,52 @@ class _SolidColorConfigState extends State<SolidColorConfigWidget> {
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: SizedBox(
-                            width: 0.15.sw,
-                            child: GestureDetector(
-                              onTap: () {
-                                _showPicker = true;
-                                setState(() {
-                                  _scrollController.animateTo(
-                                    1.sw,
-                                    duration: Duration(milliseconds: 500),
-                                    curve: Curves.easeIn,
-                                  );
-                                });
-                              },
-                              child: Icon(
-                                Icons.chevron_right_rounded,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurface
-                                    .withOpacity(0.75),
-                                size: 0.15.sw,
-                              ),
-                            ),
-                          ),
-                        ),
                         SizedBox(
-                          width: 0.15.sw,
-                          child: Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                _showPicker = true;
-                                setState(() {
-                                  _scrollController.animateTo(
-                                    0.sw,
-                                    duration: Duration(milliseconds: 500),
-                                    curve: Curves.easeIn,
-                                  );
-                                });
-                              },
-                              child: Icon(
-                                Icons.chevron_left_rounded,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurface
-                                    .withOpacity(0.75),
-                                size: 0.15.sw,
+                          width: 0.3.sw,
+                          height: 0.2.sh,
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  _showPicker = true;
+                                  setState(() {
+                                    _scrollController.animateTo(
+                                      1.sw,
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.easeIn,
+                                    );
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.chevron_right_rounded,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(0.75),
+                                  size: 0.15.sw,
+                                ),
                               ),
-                            ),
+                              GestureDetector(
+                                onTap: () {
+                                  _showPicker = true;
+                                  setState(() {
+                                    _scrollController.animateTo(
+                                      0.sw,
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.easeIn,
+                                    );
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.chevron_left_rounded,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(0.75),
+                                  size: 0.15.sw,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         Container(
