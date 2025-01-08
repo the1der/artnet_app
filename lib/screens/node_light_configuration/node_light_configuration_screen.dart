@@ -24,6 +24,7 @@ class _NodeLightConfigurationScreenState
   int _selectedMode = 0;
   int _oldMode = 0;
   bool _isLoadingHistory = true;
+  bool isConfigExpanded = false;
   List<SolidColorConfigParameters> solidConfigHistory = [];
   SolidColorConfigParameters solidColorConfigParameters =
       SolidColorConfigParameters(
@@ -117,6 +118,7 @@ class _NodeLightConfigurationScreenState
                         height: 0.05.sh,
                       ),
                       LightStyleSelector(
+                        isReduced: isConfigExpanded,
                         onModeChanged: (newMode) {
                           _oldMode = _selectedMode;
                           _selectedMode = newMode;
@@ -130,6 +132,11 @@ class _NodeLightConfigurationScreenState
                       LightStyleConfigWidget(
                         selectedMode: _selectedMode,
                         oldMode: _oldMode,
+                        isExpanded: isConfigExpanded,
+                        onExpandedChanged: (isExpanded) {
+                          isConfigExpanded = isExpanded;
+                          setState(() {});
+                        },
                         allConfigHistoryList: [
                           solidConfigHistory,
                         ],

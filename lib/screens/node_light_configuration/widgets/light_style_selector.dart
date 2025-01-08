@@ -8,9 +8,11 @@ class LightStyleSelector extends StatefulWidget {
     super.key,
     required this.onModeChanged,
     required this.onLightWrite,
+    this.isReduced = false,
   });
   Function(int) onModeChanged;
   Future<void> Function() onLightWrite;
+  bool isReduced;
   @override
   State<LightStyleSelector> createState() => _LightStyleSelectorState();
 }
@@ -19,6 +21,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
   int _selectedMode = 0;
   List<Widget> gridWidgets = [];
   bool _isWriting = false;
+  late ScrollController _scrollController;
   List<String> titlesList = [
     "Solid",
     "Pattern",
@@ -43,8 +46,8 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
             setState(() {});
           },
           child: Container(
-            width: 0.4.sw,
-            height: 0.4.sw,
+            width: 0.36.sw,
+            height: 0.36.sw,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               color: _selectedMode == i
@@ -57,7 +60,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
                   child: Text(
                     titlesList[i],
                     style: TextStyle(
-                      fontSize: 18.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w600,
                       color: _selectedMode == i
                           ? Theme.of(context).colorScheme.onPrimary
@@ -69,7 +72,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
                     ? SizedBox(
                         child: Icon(
                           iconsList[i],
-                          size: 0.4.sw,
+                          size: 0.36.sw,
                           color: Theme.of(context)
                               .colorScheme
                               .onPrimary
@@ -86,102 +89,169 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void didUpdateWidget(covariant LightStyleSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Check if `isReduced` has changed
+    if (oldWidget.isReduced != widget.isReduced) {
+      _scrollToPosition(widget.isReduced);
+    }
+  }
+
+  void _scrollToPosition(bool isReduced) {
+    log(isReduced.toString());
+    if (isReduced) {
+      _scrollController.animateTo(
+        0.8.sw + 0.1.sh,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInBack,
+      );
+    } else {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInBack,
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     fillWidgets(context);
     return Container(
-      width: 0.8.sw,
       height: 0.8.sw,
-      padding: EdgeInsets.all(0.005.sw),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Theme.of(context).colorScheme.primary,
-        // color: Color(0xFF001515),
-        // color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-            blurRadius: 15,
-            spreadRadius: 2,
-            blurStyle: BlurStyle.normal,
-          )
-        ],
-      ),
-      child: Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Theme.of(context).colorScheme.surface,
-        ),
-        child: Stack(
+      width: 1.sw,
+      alignment: Alignment.center,
+      child: SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
           children: [
-            GridView.count(
-              crossAxisCount: 2,
-              children: gridWidgets,
-            ),
-            Center(
+            Container(
+              height: 0.8.sw,
+              width: 1.sw,
+              alignment: Alignment.center,
               child: Container(
-                width: 0.0025.sw,
-                height: 0.7.sw,
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 0.0025.sw,
-                width: 0.7.sw,
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-              ),
-            ),
-            Center(
-              child: GestureDetector(
-                onTap: !_isWriting
-                    ? () async {
-                        _isWriting = true;
-                        setState(() {});
-                        await widget.onLightWrite();
-                        _isWriting = false;
-                        setState(() {});
-                      }
-                    : null,
+                width: 0.72.sw,
+                height: 0.72.sw,
+                padding: EdgeInsets.all(0.005.sw),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).colorScheme.primary,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(0.5),
+                      blurRadius: 15,
+                      spreadRadius: 2,
+                      blurStyle: BlurStyle.normal,
+                    )
+                  ],
+                ),
                 child: Container(
-                  width: 0.2.sw,
-                  height: 0.2.sw,
+                  clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
                     shape: BoxShape.circle,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.grey,
-                        offset: Offset(0, 0),
-                        blurRadius: 5,
-                        spreadRadius: 0,
+                    color: Theme.of(context).colorScheme.surface,
+                  ),
+                  child: Stack(
+                    children: [
+                      GridView.count(
+                        crossAxisCount: 2,
+                        children: gridWidgets,
+                      ),
+                      Center(
+                        child: Container(
+                          width: 0.0025.sw,
+                          height: 0.7.sw,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.5),
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          height: 0.0025.sw,
+                          width: 0.7.sw,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.5),
+                        ),
+                      ),
+                      Center(
+                        child: GestureDetector(
+                          onTap: !_isWriting
+                              ? () async {
+                                  _isWriting = true;
+                                  setState(() {});
+                                  await widget.onLightWrite();
+                                  _isWriting = false;
+                                  setState(() {});
+                                }
+                              : null,
+                          child: Container(
+                            width: 0.2.sw,
+                            height: 0.2.sw,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.secondary,
+                              shape: BoxShape.circle,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(0, 0),
+                                  blurRadius: 5,
+                                  spreadRadius: 0,
+                                )
+                              ],
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Icon(
+                                  Icons.upgrade_rounded,
+                                  size: 0.1.sw,
+                                  color: Theme.of(context).colorScheme.surface,
+                                ),
+                                _isWriting
+                                    ? SizedBox(
+                                        width: 0.2.sw,
+                                        height: 0.2.sw,
+                                        child: CircularProgressIndicator(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                              .withOpacity(0.5),
+                                          strokeWidth: 0.03.sw,
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
+                              ],
+                            ),
+                          ),
+                        ),
                       )
                     ],
                   ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Icon(
-                        Icons.upgrade_rounded,
-                        size: 0.1.sw,
-                        color: Theme.of(context).colorScheme.surface,
-                      ),
-                      _isWriting
-                          ? SizedBox(
-                              width: 0.2.sw,
-                              height: 0.2.sw,
-                              child: CircularProgressIndicator(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withOpacity(0.5),
-                                strokeWidth: 0.03.sw,
-                              ),
-                            )
-                          : const SizedBox.shrink(),
-                    ],
-                  ),
                 ),
+              ),
+            ),
+            SizedBox(height: 0.1.sh),
+            GestureDetector(
+              child: Container(
+                height: 0.1.sh,
+                width: 0.7.sw,
+                color: Colors.cyan,
+                child: Text("reduce"),
               ),
             )
           ],

@@ -1,5 +1,6 @@
 import 'package:artnet_app/data/models/node_light_configuration.dart';
-import 'package:artnet_app/screens/node_light_configuration/widgets/solid_color_config_widget.dart';
+import 'package:artnet_app/screens/node_light_configuration/widgets/patter_config/pattern_config_widget.dart';
+import 'package:artnet_app/screens/node_light_configuration/widgets/solid_color_config/solid_color_config_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,12 +12,17 @@ class LightStyleConfigWidget extends StatelessWidget {
     required this.allConfigList,
     required this.allConfigHistoryList,
     required this.onConfigChange,
+    this.isExpanded = false,
+    this.onExpandedChanged,
   });
   List<NodeLightConfiguration> allConfigList;
   List<List<NodeLightConfiguration>> allConfigHistoryList;
   List<Widget> widgetsList = [];
   int selectedMode;
   int oldMode;
+  bool isExpanded;
+  Function(bool)? onExpandedChanged;
+
   Function(List<NodeLightConfiguration>) onConfigChange;
   List<String> titlesList = [
     "Solid",
@@ -36,6 +42,7 @@ class LightStyleConfigWidget extends StatelessWidget {
         child: Center(
           child: i == 0
               ? SolidColorConfigWidget(
+                  isSelected: selectedMode == 0,
                   solidColorConfigParameters:
                       allConfigList[0] as SolidColorConfigParameters,
                   historyList: allConfigHistoryList[0]
@@ -46,13 +53,18 @@ class LightStyleConfigWidget extends StatelessWidget {
                     onConfigChange(allConfigList);
                   },
                 )
-              : Text(
-                  titlesList[i],
-                  style: TextStyle(
-                    fontSize: 30.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+              : i == 1
+                  ? PatternConfigWidget(
+                      isExpanded: isExpanded,
+                      onExpandedChanged: onExpandedChanged,
+                    )
+                  : Text(
+                      titlesList[i],
+                      style: TextStyle(
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
         ),
       ));
     }

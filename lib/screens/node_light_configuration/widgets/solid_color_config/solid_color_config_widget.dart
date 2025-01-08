@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:artnet_app/data/models/node_light_configuration.dart';
 import 'package:artnet_app/domain/repositories/solid_config_history_repository_impl.dart';
 import 'package:artnet_app/screens/node_light_configuration/widgets/color_slider.dart';
-import 'package:artnet_app/screens/node_light_configuration/widgets/solid_color_history.dart';
+import 'package:artnet_app/screens/node_light_configuration/widgets/solid_color_config/solid_color_history.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,10 +13,12 @@ class SolidColorConfigWidget extends StatefulWidget {
     required this.solidColorConfigParameters,
     required this.onChanged,
     required this.historyList,
+    required this.isSelected,
   });
   SolidColorConfigParameters solidColorConfigParameters;
   Function(SolidColorConfigParameters) onChanged;
   List<SolidColorConfigParameters> historyList;
+  bool isSelected;
   @override
   State<SolidColorConfigWidget> createState() => _SolidColorConfigState();
 }
@@ -80,7 +80,7 @@ class _SolidColorConfigState extends State<SolidColorConfigWidget> {
                 children: [
                   SingleChildScrollView(
                     controller: _scrollController,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
@@ -149,9 +149,9 @@ class _SolidColorConfigState extends State<SolidColorConfigWidget> {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          width: 0.15.sw,
-                          child: Expanded(
+                        Expanded(
+                          child: SizedBox(
+                            width: 0.15.sw,
                             child: GestureDetector(
                               onTap: () {
                                 _showPicker = true;
@@ -232,11 +232,14 @@ class _SolidColorConfigState extends State<SolidColorConfigWidget> {
             height: 0.01.sh,
             width: 1.sw,
             decoration: BoxDecoration(
-              color: widget.solidColorConfigParameters.color,
+              color: widget.isSelected
+                  ? widget.solidColorConfigParameters.color
+                  : Colors.transparent,
               boxShadow: [
                 BoxShadow(
-                  color: widget.solidColorConfigParameters.color
-                      .withOpacity(0.6), // Glow color
+                  color: widget.isSelected
+                      ? widget.solidColorConfigParameters.color
+                      : Colors.transparent, // Glow color
                   blurRadius: 7,
                   spreadRadius: 5,
                 ),
