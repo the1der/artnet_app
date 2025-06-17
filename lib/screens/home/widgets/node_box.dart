@@ -31,7 +31,7 @@ class _NodeBoxState extends State<NodeBox> {
         child: AnimatedContainer(
           width: 0.95.sw,
           height: _isExpanded ? 0.16.sh : 0.08.sh,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           onEnd: () {
             if (_isExpanded) _showExtraInfo = true;
 

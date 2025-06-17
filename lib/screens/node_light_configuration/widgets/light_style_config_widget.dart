@@ -38,7 +38,6 @@ class LightStyleConfigWidget extends StatelessWidget {
         left: (i - selectedMode).sw,
         right: (selectedMode - i).sw,
         top: 0,
-        bottom: 0,
         child: Center(
           child: i == 0
               ? SolidColorConfigWidget(
@@ -68,7 +67,6 @@ class LightStyleConfigWidget extends StatelessWidget {
         ),
       ));
     }
-    ;
   }
 
   @override
@@ -76,7 +74,7 @@ class LightStyleConfigWidget extends StatelessWidget {
     fillWidgets();
     return SizedBox(
       width: 1.sw,
-      height: 0.8.sh - 0.8.sw,
+      height: isExpanded ? (0.8.sh) : (0.8.sh - 0.8.sw),
       child: Stack(
         children: widgetsList,
       ),

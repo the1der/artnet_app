@@ -23,6 +23,7 @@ class DBController {
       version: 1,
       onCreate: (db, version) async {
         await createSolidConfigHistory(db);
+        await createPatternConfigHistory(db);
       },
     );
   }
@@ -57,5 +58,14 @@ class DBController {
             color INTEGER
           )
         ''');
+  }
+
+  Future<void> createPatternConfigHistory(Database db) async {
+    await db.execute('''
+    CREATE TABLE pattern_config_history (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      pattern TEXT NOT NULL
+    )
+  ''');
   }
 }

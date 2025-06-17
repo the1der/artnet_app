@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:artnet_app/screens/home/widgets/glass_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -99,25 +100,23 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
   void didUpdateWidget(covariant LightStyleSelector oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // Check if `isReduced` has changed
     if (oldWidget.isReduced != widget.isReduced) {
       _scrollToPosition(widget.isReduced);
     }
   }
 
   void _scrollToPosition(bool isReduced) {
-    log(isReduced.toString());
     if (isReduced) {
       _scrollController.animateTo(
         0.8.sw + 0.1.sh,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInBack,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeOut,
       );
     } else {
       _scrollController.animateTo(
         0,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInBack,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeOut,
       );
     }
   }
@@ -128,7 +127,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
     return Container(
       height: 0.8.sw,
       width: 1.sw,
-      alignment: Alignment.center,
+      alignment: Alignment.topCenter,
       child: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
@@ -247,12 +246,37 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
             ),
             SizedBox(height: 0.1.sh),
             GestureDetector(
-              child: Container(
-                height: 0.1.sh,
+              child: GlassBoxTwo(
+                height: 0.074.sh,
                 width: 0.7.sw,
-                color: Colors.cyan,
-                child: Text("reduce"),
+                borderGradient: RadialGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.primary,
+                    Theme.of(context).colorScheme.primary
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "Write".toUpperCase(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 10.sp,
+                        fontSize: 25.sp,
+                      ),
+                    ),
+                    Icon(
+                      Icons.wifi_rounded,
+                      size: 0.04.sh,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    )
+                  ],
+                ),
               ),
+            ),
+            SizedBox(
+              height: 0.013.sh,
             )
           ],
         ),

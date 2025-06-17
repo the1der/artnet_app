@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:artnet_app/data/models/node_info.dart';
 import 'package:artnet_app/data/models/node_light_configuration.dart';
+import 'package:artnet_app/domain/repositories/pattern_config_history_repository_impl.dart';
 import 'package:artnet_app/domain/repositories/solid_config_history_repository_impl.dart';
 import 'package:artnet_app/screens/node_light_configuration/widgets/light_style_config_widget.dart';
 import 'package:artnet_app/screens/node_light_configuration/widgets/light_style_selector.dart';
@@ -25,14 +26,18 @@ class _NodeLightConfigurationScreenState
   int _oldMode = 0;
   bool _isLoadingHistory = true;
   bool isConfigExpanded = false;
+  ScrollController _scrollController = ScrollController();
   List<SolidColorConfigParameters> solidConfigHistory = [];
+  List<PatternConfigParameters> patternConfigHistory = [];
   SolidColorConfigParameters solidColorConfigParameters =
       SolidColorConfigParameters(
     color: Colors.cyan,
   );
   GradientConfigParameters gradientConfigParameters =
       GradientConfigParameters();
-  PatternConfigParameters patternConfigParameters = PatternConfigParameters();
+  PatternConfigParameters patternConfigParameters = PatternConfigParameters(
+    pattern: [],
+  );
   Future<void> onLightWrite() async {
     log('ddb action');
     switch (_selectedMode) {
@@ -57,7 +62,6 @@ class _NodeLightConfigurationScreenState
           await SolidColorHistortyRepositoryImpl().fetchHistory();
       if (solidConfigHistory.isNotEmpty) {
         solidColorConfigParameters.color = solidConfigHistory.last.color;
-        log(solidConfigHistory.length.toString());
       } else {
         solidColorConfigParameters = SolidColorConfigParameters(
           color: Colors.cyan,
@@ -76,10 +80,29 @@ class _NodeLightConfigurationScreenState
             await SolidColorHistortyRepositoryImpl().fetchHistory();
         if (solidConfigHistory.isNotEmpty) {
           solidColorConfigParameters.color = solidConfigHistory.last.color;
-        } else
+        } else {
           solidColorConfigParameters = SolidColorConfigParameters(
             color: Colors.cyan,
           );
+        }
+
+        patternConfigHistory =
+            await PatternConfigHistoryRepositoryImpl().fetchHistory();
+        if (patternConfigHistory.isNotEmpty) {
+          patternConfigParameters.pattern = [];
+          patternConfigParameters.id = patternConfigHistory.last.id;
+          for (var slice in patternConfigHistory.last.pattern) {
+            patternConfigParameters.pattern.add(slice);
+          }
+        } else {
+          patternConfigParameters = PatternConfigParameters(
+            pattern: [
+              PatternSlice(color: Colors.cyan, length: 100),
+              PatternSlice(color: Colors.pink, length: 100),
+              PatternSlice(color: Colors.green, length: 100),
+            ],
+          );
+        }
         _isLoadingHistory = false;
         setState(() {});
       }
@@ -110,6 +133,7 @@ class _NodeLightConfigurationScreenState
                   child: const CircularProgressIndicator(),
                 )
               : SingleChildScrollView(
+                  controller: _scrollController,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -127,7 +151,7 @@ class _NodeLightConfigurationScreenState
                         onLightWrite: onLightWrite,
                       ),
                       SizedBox(
-                        height: 0.05.sh,
+                        height: isConfigExpanded ? 0 : 0.025.sh,
                       ),
                       LightStyleConfigWidget(
                         selectedMode: _selectedMode,
@@ -135,6 +159,11 @@ class _NodeLightConfigurationScreenState
                         isExpanded: isConfigExpanded,
                         onExpandedChanged: (isExpanded) {
                           isConfigExpanded = isExpanded;
+                          _scrollController.animateTo(
+                            isConfigExpanded ? 0.8.sw : 0,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeOut,
+                          );
                           setState(() {});
                         },
                         allConfigHistoryList: [
