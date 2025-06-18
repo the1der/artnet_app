@@ -1,23 +1,16 @@
-# ArtNet Nodes Management App
+# artnet_app
 
-## Introduction
-Welcome to the ArtNet Nodes Management App repository! This Flutter mobile application is designed for managing ArtNet nodes, configuring their network settings, and controlling DMX data transmission. The primary goal of this project is to facilitate personal development and experimentation, and it's intended for fun and educational purposes. **Please note that the app is still a work in progress and may not be fully functional yet**.
+A new Flutter project.
 
-### What is Artnet
-ArtNet is a protocol used in the entertainment and lighting industries to control and communicate with intelligent lighting fixtures, such as DMX-controlled stage lights. It allows for the transmission of lighting data, such as color, intensity, and position, over an Ethernet network. ArtNet enables lighting designers and technicians to remotely control and synchronize multiple lighting devices, making it a popular choice for creating dynamic and visually appealing lighting displays in concerts, theaters, events, and architectural installations.
+## Getting Started
 
-## Features
-- **Discover ArtNet Nodes:**: Scan the local network to discover available ArtNet nodes and display them in a list.
+This project is a starting point for a Flutter application.
 
-- **Network Settings:** Connect to an ArtNet node and configure its network settings, such as IP address, subnet mask, and gateway.
+A few resources to get you started if this is your first Flutter project:
 
-- **ArtNet Settings:** Adjust various ArtNet-specific parameters like universe, subnet, and other configurations.
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-- **DMX Data Transmission:** Send DMX data to the connected ArtNet nodes, allowing you to control lighting fixtures remotely.
-
-## Disclaimer
-This app is not intended for production use and may not have all the necessary features for a complete and polished ArtNet nodes management solution. It is solely meant for educational and personal development purposes. Use it at your own risk.
-
-
-Thank you for checking out this repository! Have fun exploring and experimenting with ArtNet nodes management. 
-## Happy coding! 👨‍💻
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
