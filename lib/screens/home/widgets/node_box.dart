@@ -42,21 +42,38 @@ class _NodeBoxState extends State<NodeBox> {
             horizontal: 0.035.sw,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.r),
-            color: widget.artNetNode.isAvailable
-                ? Theme.of(context).colorScheme.onSurface.withOpacity(0.05)
-                : Colors.grey.withOpacity(0.1),
-            border: Border(
-              left: BorderSide(
-                color: !widget.artNetNode.isAvailable
-                    ? Colors.grey
-                    : widget.artNetNode.nodeLightConfiguration == null
-                        ? Colors.amber
-                        : Colors.green,
-                width: 0.015.sw,
+              borderRadius: BorderRadius.circular(15.r),
+              color: widget.artNetNode.isAvailable
+                  ? Theme.of(context).colorScheme.onSurface.withAlpha(125)
+                  : Colors.grey.withAlpha(125),
+              border: Border.all(
+                color: (!widget.artNetNode.isAvailable
+                        ? Colors.grey
+                        : widget.artNetNode.nodeLightConfiguration == null
+                            ? Colors.amber
+                            : Colors.green)
+                    .withAlpha(50),
+                width: 1,
               ),
-            ),
-          ),
+              gradient: LinearGradient(
+                stops: const [0.0, 0.4],
+                colors: [
+                  (!widget.artNetNode.isAvailable
+                          ? Colors.grey
+                          : widget.artNetNode.nodeLightConfiguration == null
+                              ? Colors.amber
+                              : Colors.green)
+                      .withAlpha(150),
+                  (!widget.artNetNode.isAvailable
+                          ? Colors.grey
+                          : widget.artNetNode.nodeLightConfiguration == null
+                              ? Colors.amber
+                              : Colors.green)
+                      .withAlpha(15),
+                ],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              )),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -138,82 +155,65 @@ class _NodeBoxState extends State<NodeBox> {
                             )
                           ],
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 ],
               ),
               SizedBox(
                 child: Row(
                   children: [
-                    InkWell(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: GlassBoxTwo(
-                        height: 0.05.sh,
-                        width: 0.05.sh,
-                        borderRadius: BorderRadius.circular(10.r),
-                        padding: EdgeInsets.zero,
-                        borderGradient: LinearGradient(
-                          colors: [
-                            Colors.white.withOpacity(0.75),
-                            Colors.white.withOpacity(0.3),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxGradient: LinearGradient(
-                          colors: [
-                            Colors.red.withOpacity(0.1),
-                            Colors.white.withOpacity(0.05),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        child: Icon(
-                          Icons.lightbulb_outline_rounded,
-                          color: Colors.white.withOpacity(0.9),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => NodeLightConfigurationScreen(
-                              artNetNode: widget.artNetNode,
+                    widget.artNetNode.isAvailable
+                        ? InkWell(
+                            borderRadius: BorderRadius.circular(10.r),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      NodeLightConfigurationScreen(
+                                    artNetNode: widget.artNetNode,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: GlassBoxTwo(
+                              height: 0.05.sh,
+                              width: 0.05.sh,
+                              borderRadius: BorderRadius.circular(10.r),
+                              padding: EdgeInsets.zero,
+                              borderGradient: LinearGradient(
+                                colors: [
+                                  Colors.white.withAlpha(191),
+                                  Colors.white.withAlpha(77),
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              boxGradient: LinearGradient(
+                                colors: [
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withAlpha(25),
+                                  Colors.white.withAlpha(5),
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              child: Icon(
+                                Icons.lightbulb_outline_rounded,
+                                color: Colors.white.withAlpha(230),
+                              ),
                             ),
+                          )
+                        : SizedBox(
+                            height: 0.05.sh,
+                            width: 0.05.sh,
                           ),
-                        );
-                      },
-                    ),
                     SizedBox(
                       width: 0.02.sw,
                     ),
                     InkWell(
                       borderRadius: BorderRadius.circular(10.r),
-                      child: GlassBoxTwo(
-                        height: 0.05.sh,
-                        width: 0.05.sh,
-                        borderRadius: BorderRadius.circular(10.r),
-                        padding: EdgeInsets.zero,
-                        borderGradient: LinearGradient(
-                          colors: [
-                            Colors.white.withOpacity(0.75),
-                            Colors.white.withOpacity(0.3),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxGradient: LinearGradient(
-                          colors: [
-                            Colors.red.withOpacity(0.1),
-                            Colors.white.withOpacity(0.05),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        child: Icon(
-                          Icons.settings_outlined,
-                          color: Colors.white.withOpacity(0.9),
-                        ),
-                      ),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -224,6 +224,35 @@ class _NodeBoxState extends State<NodeBox> {
                           ),
                         );
                       },
+                      child: GlassBoxTwo(
+                        height: 0.05.sh,
+                        width: 0.05.sh,
+                        borderRadius: BorderRadius.circular(10.r),
+                        padding: EdgeInsets.zero,
+                        borderGradient: LinearGradient(
+                          colors: [
+                            Colors.white.withAlpha(191),
+                            Colors.white.withAlpha(77),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        boxGradient: LinearGradient(
+                          colors: [
+                            Theme.of(context)
+                                .colorScheme
+                                .secondary
+                                .withAlpha(25),
+                            Colors.white.withAlpha(5),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        child: Icon(
+                          Icons.settings_outlined,
+                          color: Colors.white.withAlpha(191),
+                        ),
+                      ),
                     ),
                   ],
                 ),

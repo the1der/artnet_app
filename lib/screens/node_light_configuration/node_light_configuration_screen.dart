@@ -44,6 +44,7 @@ class _NodeLightConfigurationScreenState
       case 0:
         SolidColorHistortyRepositoryImpl()
             .addConfig(solidColorConfigParameters);
+
         log(solidColorConfigParameters.color.toString());
         break;
 
@@ -125,6 +126,16 @@ class _NodeLightConfigurationScreenState
         child: Container(
           width: 1.sw,
           height: 1.sh,
+          decoration: BoxDecoration(
+              // gradient: LinearGradient(
+              //   begin: Alignment.bottomLeft,
+              //   end: Alignment.topRight,
+              //   colors: <Color>[
+              //     Theme.of(context).colorScheme.primary.withAlpha(50),
+              //     Theme.of(context).colorScheme.surface.withAlpha(10),
+              //   ],
+              // ),
+              ),
           alignment: Alignment.topCenter,
           child: _isLoadingHistory
               ? SizedBox(

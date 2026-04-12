@@ -19,55 +19,19 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
   List<Widget> nodeWidgetsList = [];
   List<ArtNetNode> nodesList =
       []; // TODO : replace by ArtnetModule.searchResult
-  ArtNetNode artNetNode = ArtNetNode(
-    ipAddress: InternetAddress("192.168.1.2"),
-    longName: "Node longName",
-    netmask: InternetAddress("255.255.255.0"),
-    shortName: "Node short Name",
-    macAddress: "9F:1A:3D:AB:C4:22",
-    isAvailable: true,
-    dhcpCapable: false,
-    dhcpEnabled: true,
-  );
-
-  ArtNetNode artNetNode1 = ArtNetNode(
-    ipAddress: InternetAddress("192.168.1.10"),
-    longName: "Node longName",
-    netmask: InternetAddress("255.255.255.0"),
-    shortName: "ESP32 Node two",
-    macAddress: "9F:4A:3C:AF:C4:75",
-    dhcpCapable: false,
-    dhcpEnabled: true,
-    isAvailable: true,
-    nodeLightConfiguration: NodeLightConfiguration(),
-  );
-
-  ArtNetNode artNetNode2 = ArtNetNode(
-    ipAddress: InternetAddress("192.168.1.21"),
-    longName: "Node longName",
-    shortName: "Hello Node one one",
-    macAddress: "9A:1C:3A:CB:DF:12",
-    netmask: InternetAddress("255.255.255.0"),
-    dhcpCapable: false,
-    dhcpEnabled: false,
-  );
 
   List<Widget> createNodesList(List<ArtNetNode> nodesList) {
     List<NodeBox> nodeBoxList = [];
-    nodesList.forEach((artNetNode) {
+    for (ArtNetNode artNetNode in nodesList) {
       nodeBoxList.add(NodeBox(artNetNode: artNetNode));
-    });
+    }
     return nodeBoxList;
   }
 
   @override
   void initState() {
     super.initState();
-
-    nodesList.add(artNetNode);
-    nodesList.add(artNetNode1);
-    nodesList.add(artNetNode2);
-
+    nodesList = ArtNetModule.scanResults;
     nodeWidgetsList = createNodesList(nodesList);
   }
 
@@ -86,6 +50,17 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
         child: Container(
           height: 1.sh,
           width: 1.sw,
+          decoration: BoxDecoration(
+            // gradient: LinearGradient(
+            //   begin: Alignment.bottomLeft,
+            //   end: Alignment.topRight,
+            //   colors: <Color>[
+            //     Theme.of(context).colorScheme.primary.withAlpha(50),
+            //     Theme.of(context).colorScheme.surface.withAlpha(10),
+            //   ],
+            // ),
+            color: Theme.of(context).colorScheme.surface.withAlpha(255),
+          ),
           child: Column(
             children: [
               SizedBox(
@@ -101,23 +76,23 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                       padding: EdgeInsets.zero,
                       borderGradient: LinearGradient(
                         colors: [
-                          Colors.white.withOpacity(0.75),
-                          Colors.white.withOpacity(0.3),
+                          Colors.white.withAlpha(192),
+                          Colors.white.withAlpha(77),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       boxGradient: LinearGradient(
                         colors: [
-                          Colors.red.withOpacity(0.1),
-                          Colors.white.withOpacity(0.05),
+                          Theme.of(context).colorScheme.secondary.withAlpha(25),
+                          Colors.white.withAlpha(5),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       child: Icon(
                         Icons.filter_alt_outlined,
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withAlpha(230),
                       ),
                     ),
                     SizedBox(
@@ -130,23 +105,23 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                       padding: EdgeInsets.zero,
                       borderGradient: LinearGradient(
                         colors: [
-                          Colors.white.withOpacity(0.75),
-                          Colors.white.withOpacity(0.3),
+                          Colors.white.withAlpha(192),
+                          Colors.white.withAlpha(77),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       boxGradient: LinearGradient(
                         colors: [
-                          Colors.red.withOpacity(0.1),
-                          Colors.white.withOpacity(0.05),
+                          Theme.of(context).colorScheme.secondary.withAlpha(25),
+                          Colors.white.withAlpha(5),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       child: Icon(
                         Icons.sort_outlined,
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withAlpha(230),
                       ),
                     ),
                   ],

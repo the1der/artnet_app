@@ -7,12 +7,17 @@ class HomeInitial extends HomeState {
   List<Object?> get props => [];
 }
 
-class ArtNetFoundNodes extends HomeState {
-  @override
-  List<Object?> get props => [];
-}
+// class ArtNetFoundNodes extends HomeState {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-class ArtNetNoFoundNodes extends HomeState {
+// class ArtNetNoFoundNodes extends HomeState {
+//   @override
+//   List<Object?> get props => [];
+// }
+
+class ArtnetSearchDone extends HomeState {
   @override
   List<Object?> get props => [];
 }
@@ -30,9 +35,8 @@ class ArtNetScanning extends HomeState {
 
 enum ScanState {
   firstScan,
-  getIpInfo,
+  getNodeInfo,
 }
-
 
 //  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 //     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:artnet_app/data/models/node_info.dart';
+import 'package:artnet_app/screens/node_settings/node_settings_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:tab_container/tab_container.dart';
@@ -45,6 +46,21 @@ class _NodeSettingsState extends State<NodeSettings> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: Icon(
+          Icons.edit,
+          color: Theme.of(context).colorScheme.surface,
+        ),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    NodeSettingsEditScreen(artNetNode: widget.artNetNode),
+              ));
+        },
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -61,7 +77,7 @@ class _NodeSettingsState extends State<NodeSettings> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DetailsSeparator(title: "Art-Net configuration"),
+                          DetailsSeparator(title: "Node Configuration"),
                           NodeInfoBox(
                             title: "Short name",
                             info: widget.artNetNode.shortName,
@@ -70,7 +86,10 @@ class _NodeSettingsState extends State<NodeSettings> {
                             title: "Long name",
                             info: widget.artNetNode.longName,
                           ),
-                          DetailsSeparator(title: "IP configuration"),
+                          SizedBox(
+                            height: 0.02.sh,
+                          ),
+                          DetailsSeparator(title: "IP Configuration"),
                           NodeInfoBox(
                             title: "Mac address",
                             info: widget.artNetNode.macAddress.toUpperCase(),
@@ -128,18 +147,34 @@ class _NodeSettingsState extends State<NodeSettings> {
                           SizedBox(
                             height: 0.02.sh,
                           ),
-                          DetailsSeparator(title: "Addtional configuration"),
+                          DetailsSeparator(title: "Output configuration"),
                           NodeInfoBox(
                             title: "Number of LEDs",
-                            info: 129.toString(),
+                            info: widget.artNetNode.numberOfLeds.toString(),
+                          ),
+                          NodeInfoBox(
+                            title: "LEDs per group",
+                            info: widget.artNetNode.ledsPerGroup.toString(),
                           ),
                           NodeInfoBox(
                             title: "Colors",
-                            info: "RGBW",
+                            info: widget.artNetNode.colorModel?.name
+                                    .toUpperCase() ??
+                                "Unknown",
                           ),
+                          SizedBox(
+                            height: 0.02.sh,
+                          ),
+                          DetailsSeparator(title: "Advanced configuration"),
                           NodeInfoBox(
                             title: "Controller",
-                            info: "RGBW",
+                            info: widget.artNetNode.nodeOutputType?.name
+                                    .toUpperCase() ??
+                                "Unknown",
+                          ),
+                          NodeInfoBox(
+                            title: "Universe",
+                            info: widget.artNetNode.universe.toString(),
                           ),
                         ],
                       ),
@@ -195,11 +230,7 @@ class DetailsSeparator extends StatelessWidget {
   String title;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 0.03.sh,
-        bottom: 0.005.sh,
-      ),
+    return Container(
       child: Row(
         children: [
           Text(

@@ -35,17 +35,19 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
     Icons.gradient_rounded,
     Icons.folder_special_outlined,
   ];
-
+  List<bool> supportedModes = [true, false, false, false];
   void fillWidgets(BuildContext context) {
     gridWidgets = [];
     for (int i = 0; i < 4; i++) {
       gridWidgets.add(
         GestureDetector(
-          onTap: () {
-            _selectedMode = i;
-            widget.onModeChanged(_selectedMode);
-            setState(() {});
-          },
+          onTap: supportedModes[i]
+              ? () {
+                  _selectedMode = i;
+                  widget.onModeChanged(_selectedMode);
+                  setState(() {});
+                }
+              : null,
           child: Container(
             width: 0.36.sw,
             height: 0.36.sw,
@@ -53,7 +55,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
             decoration: BoxDecoration(
               color: _selectedMode == i
                   ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+                  : Theme.of(context).colorScheme.onSurface.withAlpha(13),
             ),
             child: Stack(
               children: [
@@ -63,9 +65,14 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
                     style: TextStyle(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w600,
-                      color: _selectedMode == i
-                          ? Theme.of(context).colorScheme.onPrimary
-                          : null,
+                      color: !supportedModes[i]
+                          ? Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withAlpha(51)
+                          : _selectedMode == i
+                              ? Theme.of(context).colorScheme.onPrimary
+                              : null,
                     ),
                   ),
                 ),
@@ -77,7 +84,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
                           color: Theme.of(context)
                               .colorScheme
                               .onPrimary
-                              .withOpacity(0.2),
+                              .withAlpha(51),
                         ),
                       )
                     : const SizedBox.shrink(),
@@ -148,7 +155,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
                       color: Theme.of(context)
                           .colorScheme
                           .secondary
-                          .withOpacity(0.5),
+                          .withAlpha(128),
                       blurRadius: 15,
                       spreadRadius: 2,
                       blurStyle: BlurStyle.normal,
@@ -174,7 +181,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.5),
+                              .withAlpha(128),
                         ),
                       ),
                       Center(
@@ -184,7 +191,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.5),
+                              .withAlpha(128),
                         ),
                       ),
                       Center(
@@ -229,7 +236,7 @@ class _LightStyleSelectorState extends State<LightStyleSelector> {
                                           color: Theme.of(context)
                                               .colorScheme
                                               .primary
-                                              .withOpacity(0.5),
+                                              .withAlpha(128),
                                           strokeWidth: 0.03.sw,
                                         ),
                                       )

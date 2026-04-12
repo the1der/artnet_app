@@ -1,12 +1,9 @@
-import 'dart:io';
 import 'dart:developer';
 
-import 'package:artnet_app/data/models/node_info.dart';
 import 'package:artnet_app/screens/home/home_bloc.dart';
 import 'package:artnet_app/screens/home/home_event.dart';
 import 'package:artnet_app/screens/home/home_state.dart';
 import 'package:artnet_app/screens/home/widgets/glass_box.dart';
-import 'package:artnet_app/screens/home/widgets/node_box.dart';
 import 'package:artnet_app/screens/search_result/search_result_screen.dart';
 import 'package:artnet_app/services/artnet_module.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -21,7 +18,7 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-// TODO handle wifi connecton lost state
+// TODO: handle wifi connecton lost state
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
@@ -67,11 +64,27 @@ class _HomeScreenState extends State<HomeScreen>
           }
           return Scaffold(
             body: SafeArea(
-              child: Container(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
                 height: 1.sh,
                 padding: EdgeInsets.symmetric(
                   horizontal: 0.01.sw,
                   vertical: 0.01.sh,
+                ),
+                decoration: BoxDecoration(
+                  // gradient: LinearGradient(
+                  //   begin: state is ArtNetScanning
+                  //       ? Alignment.bottomRight
+                  //       : Alignment.bottomLeft,
+                  //   end: state is ArtNetScanning
+                  //       ? Alignment.topLeft
+                  //       : Alignment.topRight,
+                  //   colors: <Color>[
+                  //     Theme.of(context).colorScheme.primary.withAlpha(50),
+                  //     Theme.of(context).colorScheme.surface.withAlpha(10),
+                  //   ],
+                  // ),
+                  color: Theme.of(context).colorScheme.surface,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       // color: Theme.of(context)
                                       //     .colorScheme
                                       //     .secondary,
-                                      color: Colors.white.withOpacity(0.7),
+                                      color: Colors.white.withAlpha(179),
                                       fontWeight: FontWeight.w300,
                                     ),
                                   ),
@@ -130,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       // color: Theme.of(context)
                                       //     .colorScheme
                                       //     .secondary,
-                                      color: Colors.white.withOpacity(0.7),
+                                      color: Colors.white.withAlpha(179),
                                       fontWeight: FontWeight.w300,
                                     ),
                                   ),
@@ -165,11 +178,12 @@ class _HomeScreenState extends State<HomeScreen>
                                         value: _controller.value,
                                         color: state is ArtNetScanning
                                             ? Colors.cyan
-                                            : state is ArtNetNoFoundNodes
-                                                ? const Color(0x3FF50057)
-                                                : state is ArtNetFoundNodes
-                                                    ? const Color(0x3F69F0AE)
-                                                    : Colors.transparent,
+                                            : state is ArtnetSearchDone
+                                                ? ArtNetModule
+                                                        .scanResults.isEmpty
+                                                    ? const Color(0x3FF50057)
+                                                    : const Color(0x3F69F0AE)
+                                                : Colors.transparent,
                                       );
                                     },
                                   ),
@@ -198,8 +212,8 @@ class _HomeScreenState extends State<HomeScreen>
                                     ),
                                     boxGradient: RadialGradient(
                                       colors: [
-                                        Colors.white.withOpacity(0.15),
-                                        Colors.white.withOpacity(0.01),
+                                        Colors.white.withAlpha(38),
+                                        Colors.white.withAlpha(2),
                                       ],
                                       center: Alignment.bottomLeft,
                                       radius: 1,
@@ -226,14 +240,14 @@ class _HomeScreenState extends State<HomeScreen>
                                                       color: Theme.of(context)
                                                           .colorScheme
                                                           .onSurface
-                                                          .withOpacity(state
+                                                          .withAlpha(state
                                                                       .scanState ==
                                                                   ScanState
                                                                       .firstScan
-                                                              ? 1
-                                                              : 0.6),
+                                                              ? 255
+                                                              : 153),
                                                       fontSize:
-                                                          (25 - fontSize).sp,
+                                                          (23 - fontSize).sp,
                                                       fontWeight:
                                                           state.scanState ==
                                                                   ScanState
@@ -244,33 +258,32 @@ class _HomeScreenState extends State<HomeScreen>
                                                   ),
                                                   SizedBox(height: 0.05.sh),
                                                   Text(
-                                                    "Getting IP information",
+                                                    "Getting Node information",
                                                     style: TextStyle(
                                                       color: Theme.of(context)
                                                           .colorScheme
                                                           .onSurface
-                                                          .withOpacity(state
+                                                          .withAlpha(state
                                                                       .scanState ==
                                                                   ScanState
-                                                                      .getIpInfo
-                                                              ? 1
-                                                              : 0.6),
+                                                                      .getNodeInfo
+                                                              ? 255
+                                                              : 153),
                                                       fontSize:
-                                                          (18 + fontSize).sp,
-                                                      fontWeight:
-                                                          state.scanState ==
-                                                                  ScanState
-                                                                      .getIpInfo
-                                                              ? FontWeight.w500
-                                                              : FontWeight.w300,
+                                                          (16 + fontSize).sp,
+                                                      fontWeight: state
+                                                                  .scanState ==
+                                                              ScanState
+                                                                  .getNodeInfo
+                                                          ? FontWeight.w500
+                                                          : FontWeight.w300,
                                                     ),
-                                                  )
+                                                  ),
                                                 ],
                                               );
                                             },
                                           )
-                                        : (state is ArtNetFoundNodes ||
-                                                state is ArtNetNoFoundNodes)
+                                        : (state is ArtnetSearchDone)
                                             ? RichText(
                                                 textAlign: TextAlign.center,
                                                 text: TextSpan(
@@ -358,10 +371,7 @@ class _HomeScreenState extends State<HomeScreen>
                               //     : -0.3.sh,
                               // left: 0,
                               bottom: 0,
-                              left: (state is ArtNetFoundNodes ||
-                                      state is ArtNetNoFoundNodes)
-                                  ? 0
-                                  : -2.sw,
+                              left: (state is ArtnetSearchDone) ? 0 : -2.sw,
                               right: 0,
                               child: Align(
                                 alignment: Alignment.bottomCenter,
@@ -376,25 +386,26 @@ class _HomeScreenState extends State<HomeScreen>
                                         borderRadius:
                                             BorderRadius.circular(20.r),
                                         borderGradient: LinearGradient(
-                                          colors: state is ArtNetNoFoundNodes
-                                              ? [
-                                                  Colors.red.withOpacity(0.75),
-                                                  Colors.red.withOpacity(0.2),
-                                                ]
-                                              : [
-                                                  const Color(0xFF69F0AE)
-                                                      .withOpacity(0.75),
-                                                  const Color(0xFF69F0AE)
-                                                      .withOpacity(0.2),
-                                                ],
+                                          colors:
+                                              ArtNetModule.scanResults.isEmpty
+                                                  ? [
+                                                      Colors.red.withAlpha(191),
+                                                      Colors.red.withAlpha(51),
+                                                    ]
+                                                  : [
+                                                      const Color(0xFF69F0AE)
+                                                          .withAlpha(191),
+                                                      const Color(0xFF69F0AE)
+                                                          .withAlpha(51),
+                                                    ],
                                         ),
                                         boxGradient: RadialGradient(
                                           colors: [
-                                            Colors.cyan.withOpacity(0.75),
+                                            Colors.cyan.withAlpha(191),
                                             Theme.of(context)
                                                 .colorScheme
                                                 .surface
-                                                .withOpacity(0.75)
+                                                .withAlpha(191)
                                           ],
                                           center: Alignment.bottomLeft,
                                           radius: 1,
@@ -428,7 +439,9 @@ class _HomeScreenState extends State<HomeScreen>
                                     ),
                                     InkWell(
                                       borderRadius: BorderRadius.circular(20.r),
-                                      onTap: state is ArtNetFoundNodes
+                                      onTap: state is ArtnetSearchDone &&
+                                              ArtNetModule
+                                                  .scanResults.isNotEmpty
                                           ? () {
                                               Navigator.push(
                                                   context,
@@ -443,32 +456,34 @@ class _HomeScreenState extends State<HomeScreen>
                                         borderRadius:
                                             BorderRadius.circular(20.r),
                                         borderGradient: LinearGradient(
-                                          colors: state is ArtNetNoFoundNodes
+                                          colors: state is ArtnetSearchDone &&
+                                                  ArtNetModule
+                                                      .scanResults.isEmpty
                                               ? [
-                                                  Colors.white
-                                                      .withOpacity(0.75),
-                                                  Colors.white.withOpacity(0.2),
+                                                  Colors.white.withAlpha(191),
+                                                  Colors.white.withAlpha(51),
                                                 ]
                                               : [
                                                   const Color(0xFF69F0AE)
-                                                      .withOpacity(0.75),
+                                                      .withAlpha(191),
                                                   const Color(0xFF69F0AE)
-                                                      .withOpacity(0.2),
+                                                      .withAlpha(51),
                                                 ],
                                         ),
                                         boxGradient: RadialGradient(
-                                          colors: state is ArtNetNoFoundNodes
+                                          colors: state is ArtnetSearchDone &&
+                                                  ArtNetModule
+                                                      .scanResults.isEmpty
                                               ? [
-                                                  Colors.white.withOpacity(0.5),
-                                                  Colors.white
-                                                      .withOpacity(0.05),
+                                                  Colors.white.withAlpha(127),
+                                                  Colors.white.withAlpha(13),
                                                 ]
                                               : [
-                                                  Colors.cyan.withOpacity(0.75),
+                                                  Colors.cyan.withAlpha(191),
                                                   Theme.of(context)
                                                       .colorScheme
                                                       .surface
-                                                      .withOpacity(0.75)
+                                                      .withAlpha(191)
                                                 ],
                                           center: Alignment.bottomLeft,
                                           radius: 1,
@@ -505,7 +520,7 @@ class _HomeScreenState extends State<HomeScreen>
                         color: Theme.of(context)
                             .colorScheme
                             .onSurface
-                            .withOpacity(0.75),
+                            .withAlpha(191),
                       ),
                     ),
                   ],

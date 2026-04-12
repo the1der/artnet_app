@@ -1,0 +1,19 @@
+MVP app: 
+    Logic:
+        ☐ Add synOut to scan process
+        ☐ Add advanced section in node info
+    Home Screen:
+        ☐ separate home screen from scan screen
+        ☐ fix WiFi info
+        ☐ fix buttons design
+        ☐ add cancel search button
+    Solid color setting:
+        ☐ ui
+        ☐ logic
+    Artnet Module:
+        Add sendMulti:
+        ☐ OpPoll request
+        ☐ OpIpProg request
+        ☐ OpDmx request
+        ☐ OpSync request
+        ☐ Final testing
