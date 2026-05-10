@@ -6,6 +6,7 @@ import 'package:artnet_app/domain/repositories/pattern_config_history_repository
 import 'package:artnet_app/domain/repositories/solid_config_history_repository_impl.dart';
 import 'package:artnet_app/screens/node_light_configuration/widgets/light_style_config_widget.dart';
 import 'package:artnet_app/screens/node_light_configuration/widgets/light_style_selector.dart';
+import 'package:artnet_app/services/artnet_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -44,8 +45,10 @@ class _NodeLightConfigurationScreenState
       case 0:
         SolidColorHistortyRepositoryImpl()
             .addConfig(solidColorConfigParameters);
-
-        log(solidColorConfigParameters.color.toString());
+        ArtNetModule.sendDmxPacket(
+          solidColorConfigParameters: solidColorConfigParameters,
+          artNetNode: widget.artNetNode,
+        );
         break;
 
       case 1:
@@ -126,7 +129,7 @@ class _NodeLightConfigurationScreenState
         child: Container(
           width: 1.sw,
           height: 1.sh,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               // gradient: LinearGradient(
               //   begin: Alignment.bottomLeft,
               //   end: Alignment.topRight,

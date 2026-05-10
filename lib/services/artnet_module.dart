@@ -139,13 +139,13 @@ class ArtNetModule {
     }
   }
 
-  void sendDmxPacket({
+  static void sendDmxPacket({
     required SolidColorConfigParameters solidColorConfigParameters,
     required ArtNetNode artNetNode,
   }) async {
-    int dmxLength =
-        (artNetNode.numberOfLeds! / artNetNode.ledsPerGroup!).toInt() *
-            (artNetNode.colorModel!.value + 3);
+    // int dmxLength =
+    //     (artNetNode.numberOfLeds! / artNetNode.ledsPerGroup!).toInt() *
+    //         (artNetNode.colorModel!.value + 3);
 
     Uint8List header = Uint8List(18);
     ByteData headerData = ByteData.view(header.buffer);
@@ -156,7 +156,7 @@ class ArtNetModule {
 
     final Uint8List idBytes = utf8.encode(ArtNetModule.artnetProtocolID);
     final int numberOfGroupsPerPacket =
-        (dmxLength / (artNetNode.colorModel!.value + 3)).toInt();
+        (512 / (artNetNode.colorModel!.value + 3)).toInt();
     final int numberOfGroups =
         (artNetNode.numberOfLeds! / artNetNode.ledsPerGroup!).toInt();
 
@@ -187,7 +187,8 @@ class ArtNetModule {
     final int iterations = (numberOfGroups / numberOfGroupsPerPacket).ceil();
 
     for (int i = 0; i < iterations; i++) {
-      final bool isLastPacket = i == iterations - 1;
+      final bool isLastPacket = i == (iterations - 1);
+      int dmxLength;
 
       final int groupsInThisPacket = isLastPacket
           ? numberOfGroups - (numberOfGroupsPerPacket * (iterations - 1))
@@ -221,18 +222,19 @@ class ArtNetModule {
             break;
         }
       }
-    }
 
-    Uint8List packetBuffer = header.buffer.asUint8List();
-    packetBuffer.setRange(18, 18 + dmxLength, dmxData.sublist(0, dmxLength));
+      Uint8List packetBuffer = Uint8List(18 + dmxLength);
+      packetBuffer.setRange(0, header.length, header);
+      packetBuffer.setRange(18, 18 + dmxLength, dmxData.sublist(0, dmxLength));
 
-    await init();
+      await init();
 
-    try {
-      await sender!.send(packetBuffer,
-          Endpoint.unicast(artNetNode.ipAddress, port: const Port(6454)));
-    } catch (e) {
-      // log("Sending failed");
+      try {
+        await sender!.send(packetBuffer,
+            Endpoint.unicast(artNetNode.ipAddress, port: const Port(6454)));
+      } catch (e) {
+        // log("Sending failed");
+      }
     }
   }
 
