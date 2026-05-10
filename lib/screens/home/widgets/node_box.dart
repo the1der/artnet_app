@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:artnet_app/data/models/node_info.dart';
 import 'package:artnet_app/screens/home/widgets/glass_box.dart';
 import 'package:artnet_app/screens/node_light_configuration/node_light_configuration_screen.dart';
@@ -7,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NodeBox extends StatefulWidget {
-  ArtNetNode artNetNode;
-  NodeBox({super.key, required this.artNetNode});
+  final ArtNetNode artNetNode;
+  const NodeBox({super.key, required this.artNetNode});
 
   @override
   State<NodeBox> createState() => _NodeBoxState();

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Opcode {
   static const int opPoll = 0x2000;
   static const int opPollReply = 0x2100;

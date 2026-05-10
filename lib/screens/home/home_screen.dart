@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:artnet_app/screens/home/home_bloc.dart';
 import 'package:artnet_app/screens/home/home_event.dart';
 import 'package:artnet_app/screens/home/home_state.dart';
@@ -13,7 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:wifi_info_flutter/wifi_info_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -27,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen>
   // WifiInfo wifiInfo = WifiInfo();
   String wifiSSID = "";
   String wifiIP = "";
+  // ignore: unused_field
   bool _isWifiConnected = false;
 
   @override

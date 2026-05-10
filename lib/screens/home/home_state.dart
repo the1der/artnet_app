@@ -23,8 +23,8 @@ class ArtnetSearchDone extends HomeState {
 }
 
 class ArtNetScanning extends HomeState {
-  ScanState scanState;
-  int foundDevices;
+  final ScanState scanState;
+  final int foundDevices;
   ArtNetScanning({
     required this.foundDevices,
     required this.scanState,

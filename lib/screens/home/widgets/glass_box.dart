@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 
+// ignore: must_be_immutable
 class GlassBox extends StatelessWidget {
   GlassBox({
     super.key,
@@ -66,7 +67,7 @@ class GlassBox extends StatelessWidget {
 }
 
 class GlassBoxTwo extends StatelessWidget {
-  GlassBoxTwo({
+  const GlassBoxTwo({
     super.key,
     required this.child,
     this.height,
@@ -78,15 +79,15 @@ class GlassBoxTwo extends StatelessWidget {
     this.shape,
     this.padding,
   });
-  Color? boxColor;
-  Widget child;
-  double? width;
-  double? height;
-  Gradient? boxGradient;
-  Gradient? borderGradient;
-  BorderRadiusGeometry? borderRadius;
-  BoxShape? shape;
-  EdgeInsetsGeometry? padding;
+  final Color? boxColor;
+  final Widget child;
+  final double? width;
+  final double? height;
+  final Gradient? boxGradient;
+  final Gradient? borderGradient;
+  final BorderRadiusGeometry? borderRadius;
+  final BoxShape? shape;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return Container(

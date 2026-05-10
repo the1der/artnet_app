@@ -1,20 +1,19 @@
 import 'dart:math';
 
 import 'package:artnet_app/data/models/node_light_configuration.dart';
-import 'package:artnet_app/domain/repositories/pattern_config_history_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PatternConfigWidget extends StatefulWidget {
-  PatternConfigWidget({
+  const PatternConfigWidget({
     super.key,
     required this.isExpanded,
     this.onExpandedChanged,
     this.isSelected = true,
   });
-  bool isExpanded;
-  bool isSelected;
-  Function(bool)? onExpandedChanged;
+  final bool isExpanded;
+  final bool isSelected;
+  final Function(bool)? onExpandedChanged;
 
   @override
   State<PatternConfigWidget> createState() => _PatternConfigWidgetState();

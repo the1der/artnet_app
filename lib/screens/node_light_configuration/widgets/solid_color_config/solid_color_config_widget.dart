@@ -8,23 +8,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:interactive_slider/interactive_slider_controller.dart';
 
 class SolidColorConfigWidget extends StatefulWidget {
-  SolidColorConfigWidget({
+  const SolidColorConfigWidget({
     super.key,
     required this.solidColorConfigParameters,
     required this.onChanged,
     required this.historyList,
     required this.isSelected,
   });
-  SolidColorConfigParameters solidColorConfigParameters;
-  Function(SolidColorConfigParameters) onChanged;
-  List<SolidColorConfigParameters> historyList;
-  bool isSelected;
+  final SolidColorConfigParameters solidColorConfigParameters;
+  final Function(SolidColorConfigParameters) onChanged;
+  final List<SolidColorConfigParameters> historyList;
+  final bool isSelected;
   @override
   State<SolidColorConfigWidget> createState() => _SolidColorConfigState();
 }
 
 class _SolidColorConfigState extends State<SolidColorConfigWidget> {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   SolidColorHistortyRepositoryImpl solidColorHistortyRepository =
       SolidColorHistortyRepositoryImpl();
   InteractiveSliderController interactiveSliderControllerRed =
@@ -33,6 +33,7 @@ class _SolidColorConfigState extends State<SolidColorConfigWidget> {
       InteractiveSliderController(0);
   InteractiveSliderController interactiveSliderControllerBlue =
       InteractiveSliderController(0);
+  // ignore: unused_field
   bool _showPicker = false;
   @override
   void initState() {
