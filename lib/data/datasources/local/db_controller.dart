@@ -24,6 +24,7 @@ class DBController {
       onCreate: (db, version) async {
         await createSolidConfigHistory(db);
         await createPatternConfigHistory(db);
+        await createNodeHistory(db);
       },
     );
   }
@@ -67,5 +68,18 @@ class DBController {
       pattern TEXT NOT NULL
     )
   ''');
+  }
+
+  Future<void> createNodeHistory(Database db) async {
+    await db.execute('''
+      CREATE TABLE node_history (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        ip TEXT UNIQUE,
+        mac TEXT,
+        raw TEXT,
+        createdAt INTEGER
+      )
+    ''');
   }
 }

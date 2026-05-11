@@ -1,3 +1,4 @@
+import 'package:artnet_app/screens/home/home_page.dart';
 import 'package:artnet_app/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
             // scaffoldBackgroundColor: const Color(0xFF151515),
             brightness: Brightness.dark,
           ),
-          home: HomeScreen(),
+          home: const HomePage(),
         );
       },
     );
