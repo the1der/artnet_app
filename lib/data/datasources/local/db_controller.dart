@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+export 'package:sqflite/sqflite.dart' show ConflictAlgorithm;
 
 class DBController {
   static final DBController _instance = DBController._internal();
@@ -24,18 +25,21 @@ class DBController {
       onCreate: (db, version) async {
         await createSolidConfigHistory(db);
         await createPatternConfigHistory(db);
+        await createNodesDataCache(db);
       },
     );
   }
 
-  Future<int> insert(String table, Map<String, dynamic> values) async {
+  Future<int> insert(String table, Map<String, dynamic> values,
+      {ConflictAlgorithm? conflictAlgorithm}) async {
     final db = await database;
-    return await db.insert(table, values);
+    return await db.insert(table, values, conflictAlgorithm: conflictAlgorithm);
   }
 
-  Future<List<Map<String, dynamic>>> query(String table) async {
+  Future<List<Map<String, dynamic>>> query(String table,
+      {String? where, List<Object?> whereArgs = const []}) async {
     final db = await database;
-    return await db.query(table);
+    return await db.query(table, where: where, whereArgs: whereArgs);
   }
 
   Future<int> delete(
@@ -53,7 +57,7 @@ class DBController {
 
   Future<void> createSolidConfigHistory(Database db) async {
     await db.execute('''
-          CREATE TABLE solid_config_history (
+          CREATE TABLE IF NOT EXISTS solid_config_history (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             color INTEGER
           )
@@ -62,10 +66,33 @@ class DBController {
 
   Future<void> createPatternConfigHistory(Database db) async {
     await db.execute('''
-    CREATE TABLE pattern_config_history (
+    CREATE TABLE IF NOT EXISTS pattern_config_history (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       pattern TEXT NOT NULL
     )
   ''');
+  }
+
+  Future<void> createNodesDataCache(Database db) async {
+    await db.execute('''
+   CREATE TABLE IF NOT EXISTS art_net_nodes (
+    macAddress PRIMARY KEY,
+    ipAddress TEXT,
+    netmask TEXT,
+    gateWay TEXT,
+    dhcpEnabled INTEGER,
+    dhcpCapable INTEGER,
+    isAvailable INTEGER,
+    longName TEXT,
+    shortName TEXT,
+    swIn0 INTEGER,
+    netSwitch INTEGER,
+    universe INTEGER,
+    numberOfLeds INTEGER,
+    colorModel TEXT,
+    nodeOutputType TEXT,
+    ledsPerGroup INTEGER,
+    nodeLightConfiguration TEXT
+  )''');
   }
 }

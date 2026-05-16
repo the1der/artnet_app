@@ -2,7 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-class NodeLightConfiguration {}
+class NodeLightConfiguration {
+  NodeLightConfiguration();
+  Map<String, dynamic> toMap() {
+    return {};
+  }
+
+  factory NodeLightConfiguration.fromMap(Map<String, dynamic> map) {
+    return NodeLightConfiguration();
+  }
+}
 
 class SolidColorConfigParameters extends NodeLightConfiguration {
   SolidColorConfigParameters({
@@ -19,6 +28,7 @@ class SolidColorConfigParameters extends NodeLightConfiguration {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -37,6 +47,7 @@ class PatternConfigParameters extends NodeLightConfiguration {
   List<PatternSlice> pattern;
 
   /// Convert `PatternConfigParameters` to a Map for database storage.
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -103,6 +114,7 @@ class GradientConfigParameters extends NodeLightConfiguration {
   }
 
   // Converts a User object into a map (used when inserting/updating data in a database or API)
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,

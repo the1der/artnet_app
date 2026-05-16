@@ -72,7 +72,8 @@ class SynOutPacket {
 enum SynOutOutputType {
   sk6812(0x00),
   sk6812Alt1(0x01),
-  sk6812Alt2(0x02);
+  sk6812Alt2(0x02),
+  unknown(0xFF);
 
   final int value;
   const SynOutOutputType(this.value);
@@ -81,7 +82,8 @@ enum SynOutOutputType {
 enum SynOutColorModel {
   rgb(0x00),
   rgbw(0x01),
-  rgbww(0x02);
+  rgbww(0x02),
+  unknown(0xFF);
 
   final int value;
   const SynOutColorModel(this.value);

@@ -61,6 +61,7 @@ class ArtNetModule {
               decodeSynOutReply(event.data, artNetNode!);
               break;
             default:
+              log(event.address.address.toString());
               log("Unhandled opCode: $opCode");
           }
           doneListening = true;
